@@ -1,0 +1,8 @@
+{
+  "name": "gg_health_fe_web",
+  "version": "1.0.0",
+  "description": "Web front end for GG health",
+  "main": "index.js",
+  "author": "Sam Moss <sam.moss321@gmail.com>",
+  "license": "MIT"
+}
