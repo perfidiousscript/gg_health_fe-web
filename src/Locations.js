@@ -1,5 +1,6 @@
 import React from "react";
 import Store from "./js/store/index.js";
+import { Container, Col, Row } from "react-bootstrap";
 
 class Locations extends React.Component {
   constructor(props) {
@@ -32,11 +33,24 @@ class Locations extends React.Component {
     return (
       <div>
         <h1>Locations</h1>
-        <div className="locations">
+        <Container className="locations">
+          <Row>
+            <Col> </Col>
+            <Col>Name</Col>
+            <Col>Address</Col>
+            <Col>Services</Col>
+            <Col> </Col>
+          </Row>
           {this.state.locations.map((location, index) => (
-            <div key={index}>{location.name}</div>
+            <Row key={index}>
+              <Col> </Col>
+              <Col>{location.name}</Col>
+              <Col>{location.address}</Col>
+              <Col>{location.services.services}</Col>
+              <Col> </Col>
+            </Row>
           ))}
-        </div>
+        </Container>
       </div>
     );
   }
