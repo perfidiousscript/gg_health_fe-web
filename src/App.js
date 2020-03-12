@@ -4,6 +4,7 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Home.js";
 import SignUp from "./SignUp.js";
+import Locations from "./Locations.js";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           </Route>
           <Route exact path="/sign-up">
             <SignUp />
+          </Route>
+          <Route exact path="/locations">
+            <Locations />
           </Route>
         </Switch>
       </div>

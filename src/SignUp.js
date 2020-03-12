@@ -1,9 +1,13 @@
 import React from "react";
 
-class SignUp extends React.Component {
-  render() {
-    return <p>Sign Up</p>;
-  }
+function SignUp(props) {
+  // if (userLoggedIn){
+  // Redirect to home page
+  // }
+  // else{
+  return <p>Sign Up</p>;
+  // }
+  // end
 }
 
 export default SignUp;
