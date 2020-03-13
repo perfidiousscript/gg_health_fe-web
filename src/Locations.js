@@ -10,21 +10,15 @@ import { fetchLocations } from "./js/actions/index.js";
 class Locations extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(fetchLocations);
-  }
-
-  handleChange(nextSubreddit) {
     this.props.dispatch(fetchLocations());
   }
 
   renderHelper() {
     const { locations } = this.props;
-    console.log("this.props: ", this.props);
     if (!locations[0]) {
       return <p>"Loading..."</p>;
     }
@@ -66,7 +60,7 @@ Locations.propTypes = {
 function mapStateToProps(state) {
   const { locations } = state;
 
-  return { locations: locations };
+  return { locations };
 }
 
 export default connect(mapStateToProps)(Locations);
