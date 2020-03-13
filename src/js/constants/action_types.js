@@ -7,7 +7,8 @@ export const UPDATE_USER = "UPDATE_USER";
 //Location Constants
 export const ADD_LOCATION = "ADD_LOCATION";
 export const UPDATE_LOCATION = "UPDATE_LOCATION";
-export const LOCATIONS_SEARCH = "LOCATIONS_SEARCH";
+export const REQUEST_LOCATIONS = "REQUEST_LOCATIONS";
+export const RECIEVE_LOCATIONS = "RECIEVE_LOCATIONS";
 
 //Practice Constants
 export const CREATE_PRACTICE = "CREATE_PRACTICE";

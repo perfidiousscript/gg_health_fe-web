@@ -4,12 +4,14 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Provider } from "react-redux";
-import store from "./js/store/index.js";
+import configureStore from "./js/store/index.js";
 
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 const rootElement = document.getElementById("root");
+
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>

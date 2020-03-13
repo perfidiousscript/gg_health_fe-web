@@ -1,33 +1,31 @@
 import React from "react";
 import Store from "./js/store/index.js";
+import { connect } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
+
+import PropTypes from "prop-types";
+
+import { fetchLocations } from "./js/actions/index.js";
 
 class Locations extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: {},
-      locations: [],
-      isLoaded: false
-    };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    var store = Store.getState();
-    this.setState({
-      user: store.user,
-      locations: store.locations,
-      isLoaded: true
-    });
+    const { dispatch } = this.props;
+    dispatch(fetchLocations);
+  }
 
-    // Store.subscribe(() => {
-    //   console.log("Store: ", Store.getState());
-    // });
+  handleChange(nextSubreddit) {
+    this.props.dispatch(fetchLocations());
   }
 
   renderHelper() {
-    const data = this.state;
-    if (!data.locations[0]) {
+    const { locations } = this.props;
+    console.log("this.props: ", this.props);
+    if (!locations[0]) {
       return <p>"Loading..."</p>;
     }
     return (
@@ -41,7 +39,7 @@ class Locations extends React.Component {
             <Col>Services</Col>
             <Col> </Col>
           </Row>
-          {this.state.locations.map((location, index) => (
+          {locations.map((location, index) => (
             <Row key={index}>
               <Col> </Col>
               <Col>{location.name}</Col>
@@ -60,4 +58,15 @@ class Locations extends React.Component {
   }
 }
 
-export default Locations;
+Locations.propTypes = {
+  locations: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired
+};
+
+function mapStateToProps(state) {
+  const { locations } = state;
+
+  return { locations: locations };
+}
+
+export default connect(mapStateToProps)(Locations);
