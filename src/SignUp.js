@@ -1,13 +1,36 @@
 import React from "react";
+import { Formik } from "formik";
 
-function SignUp(props) {
-  // if (userLoggedIn){
-  // Redirect to home page
-  // }
-  // else{
-  return <p>Sign Up</p>;
-  // }
-  // end
+class SignUp extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <h4>Sign Up</h4>
+        <Formik
+          initialValues={{
+            firstName: "Sam",
+            lastName: "Moss",
+            emailAddress: "something"
+          }}
+        >
+          {props => (
+            <form>
+              <label for="firstName">First Name</label> <br />
+              <input type="text" id="firstName" name="firstName" /> <br />
+              <label for="lastName">Last Name</label> <br />
+              <input type="text" id="lasttName" name="lastName" /> <br />
+              <label for="emailAdress">Email Address</label> <br />
+              <input type="text" id="emailAddress" name="emailAddress" />
+            </form>
+          )}
+        </Formik>
+      </div>
+    );
+  }
 }
 
 export default SignUp;
