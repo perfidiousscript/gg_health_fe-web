@@ -10,13 +10,7 @@ class SignUp extends React.Component {
     return (
       <div>
         <h4>Sign Up</h4>
-        <Formik
-          initialValues={{
-            firstName: "Sam",
-            lastName: "Moss",
-            emailAddress: "something"
-          }}
-        >
+        <Formik>
           {props => (
             <form>
               <label for="firstName">First Name</label> <br />
