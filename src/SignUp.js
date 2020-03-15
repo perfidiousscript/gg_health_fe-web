@@ -9,12 +9,16 @@ class SignUp extends React.Component {
     super(props);
   }
 
-  // componentDidMount() {
-  //
-  // }
-
   render() {
-    const { dispatch } = this.props;
+    const { dispatch, isFetching, responseStatus } = this.props;
+    let responseDisplay;
+    if (!isFetching && responseStatus) {
+      if (responseStatus === 201) {
+        return <p>Success!</p>;
+      } else {
+        return <p>User creation error!</p>;
+      }
+    }
     return (
       <div>
         <h4>Sign Up</h4>
@@ -26,7 +30,7 @@ class SignUp extends React.Component {
             }, 400);
           }}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, isFetching, responseStatus, responseDisplay }) => (
             <Form>
               <label for="firstName">First Name</label>
               <br />
@@ -37,6 +41,10 @@ class SignUp extends React.Component {
               <label for="emailAddress">Email Address</label>
               <br />
               <Field type="text" name="emailAddress" /> <br />
+              <label for="password">Password</label>
+              <br />
+              <Field type="text" name="password" /> <br />
+              <br />
               <p> </p>
               <button type="submit" disabled={isSubmitting}>
                 Submit
@@ -44,15 +52,16 @@ class SignUp extends React.Component {
             </Form>
           )}
         </Formik>
+        {responseDisplay}
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { user } = state.userReducer;
+  const { user, responseStatus, isFetching } = state.userReducer;
 
-  return { user };
+  return { user, responseStatus, isFetching };
 }
 
 export default connect(mapStateToProps)(SignUp);

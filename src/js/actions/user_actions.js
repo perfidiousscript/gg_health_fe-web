@@ -5,26 +5,28 @@ import {
 
 import fetch from "cross-fetch";
 
-function response({ firstName, lastName, emailAddress }) {
-  fetch(
-    `http://localhost:3001/users?first_name=${firstName}&last_name=${lastName}&email_address=${emailAddress}`,
+async function createUserCall({ firstName, lastName, emailAddress, password }) {
+  const response = await fetch(
+    `http://localhost:3001/users?first_name=${firstName}&last_name=${lastName}&email_address=${emailAddress}&password=${password}`,
     {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       }
     }
   );
+  return await response;
 }
 
 function sendUserCreate(user_info) {
-  return { type: SEND_CREATE_USER };
+  return { type: SEND_CREATE_USER, isFetching: true };
 }
 
-function receiveUserCreate(json) {
+function receiveUserCreate({ status }) {
   return {
     type: RECIEVE_CREATE_USER,
-    response_status: json,
+    responseStatus: status,
+    isFetching: false,
     recievedAt: Date.now()
   };
 }
@@ -32,8 +34,8 @@ function receiveUserCreate(json) {
 export function createUser(user_values) {
   return dispatch => {
     dispatch(sendUserCreate());
-    return response(user_values);
-    // .then(response => response.json())
-    // .then(json => dispatch(receiveUserCreate(json)));
+    return createUserCall(user_values).then(json =>
+      dispatch(receiveUserCreate(json))
+    );
   };
 }

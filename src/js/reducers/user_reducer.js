@@ -13,7 +13,9 @@ export default function userReducer(state = initialState, action) {
     case SEND_CREATE_USER:
       return Object.assign({}, state, { isFetching: true });
     case RECIEVE_CREATE_USER:
+      console.log("In Recieve Create User: ", action);
       return Object.assign({}, state, {
+        responseStatus: action.responseStatus,
         isFetching: false
       });
     default:
