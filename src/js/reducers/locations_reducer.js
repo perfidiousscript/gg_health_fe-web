@@ -10,7 +10,7 @@ const initialState = {
   isFetching: false
 };
 
-function rootReducer(state = initialState, action) {
+export default function locationsReducer(state = initialState, action) {
   switch (action.type) {
     case REQUEST_LOCATIONS:
       return Object.assign({}, state, { isFetching: true });
@@ -23,5 +23,3 @@ function rootReducer(state = initialState, action) {
       return state;
   }
 }
-
-export default rootReducer;

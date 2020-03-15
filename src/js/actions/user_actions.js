@@ -1,7 +1,6 @@
 import {
-  ADD_LOCATION,
-  REQUEST_LOCATIONS,
-  RECIEVE_LOCATIONS
+  SEND_CREATE_USER,
+  RECIEVE_CREATE_USER
 } from "../constants/action_types";
 
 import fetch from "cross-fetch";
@@ -16,27 +15,23 @@ const response = fetch(
   }
 );
 
-function requestLocations() {
-  return { type: REQUEST_LOCATIONS };
+function requestUserCreate() {
+  return { type: SEND_CREATE_USER };
 }
 
-function receiveLocations(json) {
+function receiveUserCreate(json) {
   return {
-    type: RECIEVE_LOCATIONS,
+    type: RECIEVE_CREATE_USER,
     locations: json,
     recievedAt: Date.now()
   };
 }
 
-export function fetchLocations() {
+export function createUser() {
   return dispatch => {
     dispatch(requestLocations());
     return response
       .then(response => response.json())
       .then(json => dispatch(receiveLocations(json)));
   };
-}
-
-export function addLocation(payload) {
-  return { type: ADD_LOCATION, payload };
 }
