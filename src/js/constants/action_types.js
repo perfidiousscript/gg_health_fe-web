@@ -1,6 +1,7 @@
 //User constants
 export const AUTHENTICATE_USER = "AUTHENTICATE_USER";
-export const CREATE_USER = "CREATE_USER";
+export const SEND_CREATE_USER = "SEND_CREATE_USER";
+export const RECIEVE_CREATE_USER = "RECIEVE_CREATE_USER";
 export const GET_USERS = "GET_USERS";
 export const UPDATE_USER = "UPDATE_USER";
 
