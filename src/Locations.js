@@ -5,7 +5,7 @@ import { Container, Col, Row } from "react-bootstrap";
 
 import PropTypes from "prop-types";
 
-import { fetchLocations } from "./js/actions/locations.js";
+import { fetchLocations } from "./js/actions/location_actions.js";
 
 class Locations extends React.Component {
   constructor(props) {
@@ -58,7 +58,7 @@ Locations.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { locations } = state;
+  const { locations } = state.locationsReducer;
 
   return { locations };
 }
