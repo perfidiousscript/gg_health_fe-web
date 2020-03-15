@@ -14,7 +14,7 @@ class Locations extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    this.props.dispatch(fetchLocations());
+    dispatch(fetchLocations());
   }
 
   renderHelper() {

@@ -5,33 +5,35 @@ import {
 
 import fetch from "cross-fetch";
 
-const response = fetch(
-  `http://localhost:3001/location_search?latitude=45.5419799&longitude=122.6486`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
+function response({ firstName, lastName, emailAddress }) {
+  fetch(
+    `http://localhost:3001/users?first_name=${firstName}&last_name=${lastName}&email_address=${emailAddress}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
-  }
-);
+  );
+}
 
-function requestUserCreate() {
+function sendUserCreate(user_info) {
   return { type: SEND_CREATE_USER };
 }
 
 function receiveUserCreate(json) {
   return {
     type: RECIEVE_CREATE_USER,
-    locations: json,
+    response_status: json,
     recievedAt: Date.now()
   };
 }
 
-export function createUser() {
+export function createUser(user_values) {
   return dispatch => {
-    dispatch(requestLocations());
-    return response
-      .then(response => response.json())
-      .then(json => dispatch(receiveLocations(json)));
+    dispatch(sendUserCreate());
+    return response(user_values);
+    // .then(response => response.json())
+    // .then(json => dispatch(receiveUserCreate(json)));
   };
 }
