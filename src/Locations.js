@@ -5,7 +5,7 @@ import { Container, Col, Row } from "react-bootstrap";
 
 import PropTypes from "prop-types";
 
-import { fetchLocations } from "./js/actions/index.js";
+import { fetchLocations } from "./js/actions/locations.js";
 
 class Locations extends React.Component {
   constructor(props) {
