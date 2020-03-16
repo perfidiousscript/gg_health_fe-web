@@ -6,15 +6,18 @@ import {
 
 import fetch from "cross-fetch";
 
-const response = fetch(
-  `http://localhost:3001/location_search?latitude=45.5419799&longitude=122.6486`,
-  {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
+async function callLocations() {
+  const response = await fetch(
+    `http://localhost:3001/location_search?latitude=45.5419799&longitude=122.6486`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
-  }
-);
+  );
+  return await response;
+}
 
 function requestLocations() {
   return { type: REQUEST_LOCATIONS };
@@ -31,7 +34,7 @@ function receiveLocations(json) {
 export function fetchLocations() {
   return dispatch => {
     dispatch(requestLocations());
-    return response
+    return callLocations
       .then(response => response.json())
       .then(json => dispatch(receiveLocations(json)));
   };
