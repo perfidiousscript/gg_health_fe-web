@@ -68,7 +68,10 @@ export function authenticateUser(user_values) {
     dispatch(sendUserAuth());
     return authenticateUserCall(user_values)
       .then(response => response.json())
-      .then(json => dispatch(receiveUserAuth(json)));
+      .then(json => {
+        localStorage.setItem("token", json.auth_token);
+        dispatch(receiveUserAuth(json));
+      });
   };
 }
 
