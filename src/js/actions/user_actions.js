@@ -2,7 +2,8 @@ import {
   SEND_CREATE_USER,
   RECIEVE_CREATE_USER,
   SEND_USER_AUTHENTICATE,
-  RECIEVE_USER_AUTHENTICATE
+  RECIEVE_USER_AUTHENTICATE,
+  AUTHENTICATION_ERROR
 } from "../constants/action_types";
 
 import fetch from "cross-fetch";
@@ -63,14 +64,28 @@ function receiveUserAuth({ user, auth_token, status }) {
   };
 }
 
+function authError({ user_authentication }) {
+  return {
+    type: AUTHENTICATION_ERROR,
+    authError: user_authentication,
+    fetching: false,
+    recievedAt: Date.now()
+  };
+}
+
 export function authenticateUser(user_values) {
   return dispatch => {
     dispatch(sendUserAuth());
     return authenticateUserCall(user_values)
       .then(response => response.json())
       .then(json => {
-        localStorage.setItem("token", json.auth_token);
-        dispatch(receiveUserAuth(json));
+        if (json.error) {
+          console.log("Response: ", json);
+          dispatch(authError(json.error));
+        } else {
+          localStorage.setItem("token", json.auth_token);
+          dispatch(receiveUserAuth(json));
+        }
       });
   };
 }

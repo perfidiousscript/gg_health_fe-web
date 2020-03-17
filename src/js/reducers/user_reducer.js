@@ -2,7 +2,8 @@ import {
   SEND_CREATE_USER,
   RECIEVE_CREATE_USER,
   SEND_USER_AUTHENTICATE,
-  RECIEVE_USER_AUTHENTICATE
+  RECIEVE_USER_AUTHENTICATE,
+  AUTHENTICATION_ERROR
 } from "../constants/action_types";
 
 const initialState = {
@@ -20,6 +21,11 @@ export default function userReducer(state = initialState, action) {
         responseStatus: action.responseStatus,
         user: action.user,
         jwt: action.jwt,
+        isFetching: false
+      });
+    case AUTHENTICATION_ERROR:
+      return Object.assign({}, state, {
+        authError: action.authError,
         isFetching: false
       });
     case SEND_CREATE_USER:
