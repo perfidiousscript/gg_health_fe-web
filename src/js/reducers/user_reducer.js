@@ -12,7 +12,8 @@ const initialState = {
   responseStatus: "",
   isFetching: false,
   authError: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  signUpStep: 1
 };
 
 export default function userReducer(state = initialState, action) {

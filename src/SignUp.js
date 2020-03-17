@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Formik, Form, Field } from "formik";
 
-import { createUser } from "./js/actions/user_actions.js";
+import StepOne from "./Components/SignUpComponents/StepOne.js";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -10,7 +9,7 @@ class SignUp extends React.Component {
   }
 
   render() {
-    const { dispatch, isFetching, responseStatus } = this.props;
+    const { dispatch, isFetching, responseStatus, signUpStep } = this.props;
     let responseDisplay;
     if (!isFetching && responseStatus) {
       if (responseStatus === 201) {
@@ -19,54 +18,19 @@ class SignUp extends React.Component {
         return <p>User creation error!</p>;
       }
     }
-    return (
-      <div>
-        <h4>Sign Up</h4>
-        <Formik
-          initialValues={{
-            firstName: "",
-            lastName: "",
-            emailAddress: "",
-            password: ""
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              dispatch(createUser(values));
-            }, 400);
-          }}
-        >
-          {({ isSubmitting, isFetching, responseStatus, responseDisplay }) => (
-            <Form>
-              <label for="firstName">First Name</label>
-              <br />
-              <Field type="text" name="firstName" /> <br />
-              <label for="lastName">Last Name</label>
-              <br />
-              <Field type="text" name="lastName" /> <br />
-              <label for="emailAddress">Email Address</label>
-              <br />
-              <Field type="text" name="emailAddress" /> <br />
-              <label for="password">Password</label>
-              <br />
-              <Field type="text" name="password" /> <br />
-              <br />
-              <p> </p>
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
-            </Form>
-          )}
-        </Formik>
-        {responseDisplay}
-      </div>
-    );
+    switch (signUpStep) {
+      case 1:
+        return <StepOne />;
+      default:
+        return <StepOne />;
+    }
   }
 }
 
 function mapStateToProps(state) {
-  const { user, responseStatus, isFetching } = state.userReducer;
+  const { user, responseStatus, isFetching, signUpStep } = state.userReducer;
 
-  return { user, responseStatus, isFetching };
+  return { user, responseStatus, isFetching, signUpStep };
 }
 
 export default connect(mapStateToProps)(SignUp);

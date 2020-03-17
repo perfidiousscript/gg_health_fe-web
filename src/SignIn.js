@@ -41,7 +41,7 @@ class SignIn extends React.Component {
     } else {
       return (
         <div>
-          <h4>Sign Up</h4>
+          <h4>Sign In</h4>
           <Formik
             initialValues={{ firstName: "", emailAddress: "" }}
             onSubmit={(values, { setSubmitting }) => {
