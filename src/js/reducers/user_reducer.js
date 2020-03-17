@@ -9,7 +9,10 @@ import {
 const initialState = {
   user: {},
   jwt: "",
-  response_status: ""
+  responseStatus: "",
+  isFetching: false,
+  authError: false,
+  isAuthenticated: false
 };
 
 export default function userReducer(state = initialState, action) {
@@ -21,11 +24,13 @@ export default function userReducer(state = initialState, action) {
         responseStatus: action.responseStatus,
         user: action.user,
         jwt: action.jwt,
+        isAuthenticated: true,
         isFetching: false
       });
     case AUTHENTICATION_ERROR:
       return Object.assign({}, state, {
         authError: action.authError,
+        isAuthenticated: false,
         isFetching: false
       });
     case SEND_CREATE_USER:

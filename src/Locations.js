@@ -52,15 +52,15 @@ class Locations extends React.Component {
   }
 }
 
-Locations.propTypes = {
-  locations: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired
-};
+// Locations.propTypes = {
+//   locations: PropTypes.array.isRequired,
+//   isFetching: PropTypes.bool.isRequired
+// };
 
 function mapStateToProps(state) {
-  const { locations } = state.locationsReducer;
+  const { locations, user } = state.locationsReducer;
 
-  return { locations };
+  return { locations, user };
 }
 
 export default connect(mapStateToProps)(Locations);
