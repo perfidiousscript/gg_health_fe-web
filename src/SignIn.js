@@ -79,7 +79,7 @@ function mapStateToProps(state) {
     isFetching,
     authError,
     isAuthenticated
-  } = state.userReducer;
+  } = state.user;
 
   return { user, responseStatus, isFetching, authError, isAuthenticated };
 }

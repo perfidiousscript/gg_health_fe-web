@@ -22,9 +22,7 @@ class StepOne extends React.Component {
             password: ""
           }}
           onSubmit={values => {
-            setTimeout(() => {
-              dispatch(createUser(values));
-            }, 400);
+            dispatch(createUser(values));
           }}
         >
           {({ isSubmitting, isFetching, responseStatus }) => (
@@ -44,7 +42,7 @@ class StepOne extends React.Component {
               <br />
               <p> </p>
               <button type="submit" disabled={isSubmitting}>
-                Submit
+                Next
               </button>
             </Form>
           )}
@@ -55,7 +53,7 @@ class StepOne extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { user, responseStatus, isFetching, signUpStep } = state.userReducer;
+  const { user, responseStatus, isFetching, signUpStep } = state.user;
 
   return { user, responseStatus, isFetching, signUpStep };
 }

@@ -1,9 +1,11 @@
 import {
   SEND_CREATE_USER,
   RECIEVE_CREATE_USER,
+  SEND_UPDATE_USER,
+  RECIEVE_UPDATE_USER,
   SEND_USER_AUTHENTICATE,
   RECIEVE_USER_AUTHENTICATE,
-  AUTHENTICATION_ERROR
+  CALL_ERROR
 } from "../constants/action_types";
 
 import fetch from "cross-fetch";
@@ -20,6 +22,18 @@ async function createUserCall({ firstName, lastName, emailAddress, password }) {
       }
     }
   );
+  return await response;
+}
+
+async function updateUserCall(userValues, token) {
+  const response = await fetch(`${api_url}/users`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: userValues
+  });
   return await response;
 }
 
@@ -40,10 +54,24 @@ function sendUserCreate(user_info) {
   return { type: SEND_CREATE_USER, isFetching: true };
 }
 
-function receiveUserCreate({ status }) {
+function receiveUserCreate({ user, status }) {
   return {
     type: RECIEVE_CREATE_USER,
     responseStatus: status,
+    user: user,
+    isFetching: false,
+    recievedAt: Date.now()
+  };
+}
+
+function sendUserUpdate(user_info) {
+  return { type: SEND_UPDATE_USER, isFetching: true };
+}
+
+function receiveUserUpdate({ user }) {
+  return {
+    type: RECIEVE_UPDATE_USER,
+    user: user,
     isFetching: false,
     recievedAt: Date.now()
   };
@@ -64,10 +92,10 @@ function receiveUserAuth({ user, auth_token, status }) {
   };
 }
 
-function authError({ user_authentication }) {
+function callError(error) {
   return {
-    type: AUTHENTICATION_ERROR,
-    authError: user_authentication,
+    type: CALL_ERROR,
+    error: error,
     fetching: false,
     recievedAt: Date.now()
   };
@@ -80,11 +108,10 @@ export function authenticateUser(user_values) {
       .then(response => response.json())
       .then(json => {
         if (json.error) {
-          console.log("Response: ", json);
-          dispatch(authError(json.error));
+          dispatch(callError(json.error));
         } else {
-          localStorage.setItem("token", json.auth_token);
-          dispatch(receiveUserAuth(json));
+          localStorage.setItem("auth_token", json.auth_token);
+          return dispatch(receiveUserAuth(json));
         }
       });
   };
@@ -93,8 +120,33 @@ export function authenticateUser(user_values) {
 export function createUser(user_values) {
   return dispatch => {
     dispatch(sendUserCreate());
-    return createUserCall(user_values).then(json =>
-      dispatch(receiveUserCreate(json))
-    );
+    return createUserCall(user_values)
+      .then(response => response.json())
+      .then(json => {
+        if (json.error) {
+          dispatch(callError(json.error));
+        } else {
+          localStorage.setItem("auth_token", json.auth_token);
+          dispatch(receiveUserCreate(json));
+        }
+      });
+  };
+}
+
+export function updateUser(userValues) {
+  return dispatch => {
+    dispatch(sendUserUpdate());
+    var token = localStorage.auth_token;
+    if (token) {
+      var userValuesJson = JSON.stringify(userValues);
+      return updateUserCall(userValuesJson, token)
+        .then(response => response.json())
+        .then(json => {
+          console.log("JSON in updateUser: ", json);
+          dispatch(receiveUserUpdate(json));
+        });
+    } else {
+      dispatch(callError("Please Log in."));
+    }
   };
 }

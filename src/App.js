@@ -72,7 +72,7 @@ function PrivateRoute({ user, isAuthenticated, children, ...rest }) {
 }
 
 function mapStateToProps(state) {
-  const { user, isAuthenticated } = state.userReducer;
+  const { user, isAuthenticated } = state.user;
 
   return { user, isAuthenticated };
 }

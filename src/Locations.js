@@ -58,7 +58,7 @@ class Locations extends React.Component {
 // };
 
 function mapStateToProps(state) {
-  const { locations, user } = state.locationsReducer;
+  const { locations, user } = state.locations;
 
   return { locations, user };
 }

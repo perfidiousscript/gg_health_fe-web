@@ -3,8 +3,8 @@ import locationsReducer from "./locations_reducer";
 import userReducer from "./user_reducer";
 
 const rootReducer = combineReducers({
-  locationsReducer,
-  userReducer
+  locations: locationsReducer,
+  user: userReducer
 });
 
 export default rootReducer;

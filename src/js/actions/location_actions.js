@@ -37,7 +37,9 @@ export function fetchLocations() {
     dispatch(requestLocations());
     return callLocations()
       .then(response => response.json())
-      .then(json => dispatch(receiveLocations(json)));
+      .then(json => {
+        dispatch(receiveLocations(json));
+      });
   };
 }
 
