@@ -22,8 +22,6 @@ class StepThree extends React.Component {
 function mapStateToProps(state) {
   const { user } = state.user;
 
-  console.log("State in MstP", state);
-
   return { user };
 }
 

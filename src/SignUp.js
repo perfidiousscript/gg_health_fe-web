@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import StepOne from "./Components/SignUpComponents/StepOne.js";
 import StepTwo from "./Components/SignUpComponents/StepTwo.js";
 import StepThree from "./Components/SignUpComponents/StepThree.js";
+import StepFour from "./Components/SignUpComponents/StepFour.js";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -13,13 +14,6 @@ class SignUp extends React.Component {
   render() {
     const { dispatch, isFetching, responseStatus, signUpStep } = this.props;
     let responseDisplay;
-    // if (signUpStep === 3) {
-    //   if (responseStatus === 201) {
-    //     return <p>Success!</p>;
-    //   } else {
-    //     return <p>User creation error!</p>;
-    //   }
-    // }
     switch (signUpStep) {
       case 1:
         return <StepOne />;
@@ -27,6 +21,8 @@ class SignUp extends React.Component {
         return <StepTwo />;
       case 3:
         return <StepThree />;
+      case 4:
+        return <StepFour />;
       default:
         return <StepOne />;
     }
