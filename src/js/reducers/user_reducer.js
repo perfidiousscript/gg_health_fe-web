@@ -5,7 +5,10 @@ import {
   RECIEVE_UPDATE_USER,
   SEND_USER_AUTHENTICATE,
   RECIEVE_USER_AUTHENTICATE,
-  CALL_ERROR
+  SEND_USER_PROFILE,
+  RECIEVE_USER_PROFILE,
+  CALL_ERROR,
+  LOG_OUT_USER
 } from "../constants/action_types";
 
 const initialState = {
@@ -19,7 +22,6 @@ const initialState = {
 };
 
 export default function userReducer(state = initialState, action) {
-  console.log("Action in UserReducer: ", action);
   switch (action.type) {
     case SEND_USER_AUTHENTICATE:
       return { ...state, isFetching: true };
@@ -57,6 +59,17 @@ export default function userReducer(state = initialState, action) {
         user: action.user,
         isFetching: false,
         signUpStep: action.step
+      };
+    case SEND_USER_PROFILE:
+      console.log(action);
+      return { ...state, isFetching: true };
+    case RECIEVE_USER_PROFILE:
+      console.log(action);
+      return {
+        ...state,
+        user: action.user,
+        isFetching: false,
+        isAuthenticated: true
       };
     default:
       return state;

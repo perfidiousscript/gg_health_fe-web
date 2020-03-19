@@ -7,8 +7,6 @@ class Home extends React.Component {
       <div>
         <p>Home Screen</p>
         <Link to="/sign-up">Sign Up</Link>
-        <span> </span>
-        <Link to="/sign-in">Sign In</Link>
       </div>
     );
   }

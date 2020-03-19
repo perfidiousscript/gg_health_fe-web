@@ -5,7 +5,10 @@ import {
   RECIEVE_UPDATE_USER,
   SEND_USER_AUTHENTICATE,
   RECIEVE_USER_AUTHENTICATE,
-  CALL_ERROR
+  SEND_USER_PROFILE,
+  RECIEVE_USER_PROFILE,
+  CALL_ERROR,
+  LOG_OUT_USER
 } from "../constants/action_types";
 
 import fetch from "cross-fetch";
@@ -47,6 +50,17 @@ async function authenticateUserCall({ emailAddress, password }) {
       }
     }
   );
+  return await response;
+}
+
+async function userProfileCall(token) {
+  const response = await fetch(`${api_url}/profile`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  });
   return await response;
 }
 
@@ -93,6 +107,23 @@ function receiveUserAuth({ user, auth_token, status }) {
   };
 }
 
+function receiveUserProfile(user) {
+  return {
+    type: RECIEVE_USER_PROFILE,
+    user: user,
+    isFetching: false,
+    isAuthenticated: true,
+    recievedAt: Date.now()
+  };
+}
+
+function sendUserProfile() {
+  return {
+    type: SEND_USER_PROFILE,
+    isFetching: true
+  };
+}
+
 function callError(error) {
   return {
     type: CALL_ERROR,
@@ -116,6 +147,26 @@ export function authenticateUser(user_values) {
         }
       });
   };
+}
+
+export function getUserProfile() {
+  return dispatch => {
+    dispatch(sendUserProfile());
+    var token = localStorage.auth_token;
+    return userProfileCall(token)
+      .then(response => response.json())
+      .then(json => {
+        if (json.error) {
+          dispatch(callError(json.error));
+        } else {
+          return dispatch(receiveUserProfile(json.user));
+        }
+      });
+  };
+}
+
+export function logOutUser() {
+  // dispatch();
 }
 
 export function createUser(user_values) {
