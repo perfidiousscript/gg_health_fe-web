@@ -56,7 +56,7 @@ export default function userReducer(state = initialState, action) {
         ...state,
         user: action.user,
         isFetching: false,
-        signUpStep: 3
+        signUpStep: action.step
       };
     default:
       return state;

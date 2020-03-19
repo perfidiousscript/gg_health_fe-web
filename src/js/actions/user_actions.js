@@ -68,11 +68,12 @@ function sendUserUpdate(user_info) {
   return { type: SEND_UPDATE_USER, isFetching: true };
 }
 
-function receiveUserUpdate({ user }) {
+function receiveUserUpdate({ user }, nextStep) {
   return {
     type: RECIEVE_UPDATE_USER,
     user: user,
     isFetching: false,
+    step: nextStep,
     recievedAt: Date.now()
   };
 }
@@ -133,7 +134,7 @@ export function createUser(user_values) {
   };
 }
 
-export function updateUser(userValues) {
+export function updateUser(userValues, nextStep) {
   return dispatch => {
     dispatch(sendUserUpdate());
     var token = localStorage.auth_token;
@@ -142,8 +143,7 @@ export function updateUser(userValues) {
       return updateUserCall(userValuesJson, token)
         .then(response => response.json())
         .then(json => {
-          console.log("JSON in updateUser: ", json);
-          dispatch(receiveUserUpdate(json));
+          dispatch(receiveUserUpdate(json, nextStep));
         });
     } else {
       dispatch(callError("Please Log in."));

@@ -20,12 +20,17 @@ class StepTwo extends React.Component {
             role: "consumer"
           }}
           onSubmit={values => {
-            dispatch(updateUser(values));
+            let nextStep;
+            if (values.role === "consumer") {
+              nextStep = 5;
+            } else {
+              nextStep = 4;
+            }
+            dispatch(updateUser(values, nextStep));
           }}
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field type="role" name="role" placeholder="Choose your role!" />
               <br />
               <Field as="select" name="role">
                 <option value="" label="Select your role" />
