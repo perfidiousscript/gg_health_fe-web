@@ -5,6 +5,7 @@ import StepOne from "./Components/SignUpComponents/StepOne.js";
 import StepTwo from "./Components/SignUpComponents/StepTwo.js";
 import StepThree from "./Components/SignUpComponents/StepThree.js";
 import StepFour from "./Components/SignUpComponents/StepFour.js";
+import StepFinal from "./Components/SignUpComponents/StepFinal.js";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class SignUp extends React.Component {
         return <StepThree />;
       case 4:
         return <StepFour />;
+      case 5:
+        return <StepFinal />;
       default:
         return <StepOne />;
     }
