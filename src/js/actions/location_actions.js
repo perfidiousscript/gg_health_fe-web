@@ -6,14 +6,14 @@ import {
 
 import fetch from "cross-fetch";
 
-async function callLocations() {
+async function callLocations(token) {
   const response = await fetch(
     `http://localhost:3001/location_search?latitude=45.5419799&longitude=122.6486`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.token}`
+        Authorization: `Bearer ${token}`
       }
     }
   );
@@ -35,7 +35,8 @@ function receiveLocations(json) {
 export function fetchLocations() {
   return dispatch => {
     dispatch(requestLocations());
-    return callLocations()
+    var token = localStorage.auth_token;
+    return callLocations(token)
       .then(response => response.json())
       .then(json => {
         dispatch(receiveLocations(json));
