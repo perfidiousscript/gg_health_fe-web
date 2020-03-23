@@ -13,6 +13,7 @@ class SignIn extends React.Component {
   }
 
   render() {
+    console.log("props: ", this.props);
     const {
       dispatch,
       isFetching,
@@ -35,14 +36,6 @@ class SignIn extends React.Component {
             View Locations
           </Link>
           <br />
-          <Link
-            to={{
-              pathname: "/manager-dashboard",
-              state: { user: user, isAuthenticated: isAuthenticated }
-            }}
-          >
-            View Your Dashboard
-          </Link>
         </div>
       );
     } else if (authError) {

@@ -14,29 +14,15 @@ import Home from "./Home.js";
 import SignUp from "./SignUp.js";
 import Locations from "./Locations.js";
 import SignIn from "./SignIn.js";
+import AuthLink from "./AuthLink.js";
 import ManagerDash from "./ManagerDash.js";
 import { getUserProfile, logOutUser } from "./js/actions/user_actions.js";
-
-function authLink(isAuthenticated) {
-  return isAuthenticated ? (
-    <Button variant="link" onClick={logOut()}>
-      Sign Out
-    </Button>
-  ) : (
-    <Link to="/sign-in">Sign In</Link>
-  );
-}
 
 const PrivateRoute = ({ user, component, ...options }) => {
   const finalComponent = user ? component : SignIn;
 
   return <Route {...options} component={finalComponent} />;
 };
-
-function logOut() {
-  // localStorage.setItem("auth_token", "");
-  // dispatch(logOut());
-}
 
 class App extends React.Component {
   constructor(props) {
@@ -52,8 +38,14 @@ class App extends React.Component {
     }
   }
 
+  logOut = () => {
+    const { dispatch, user } = this.props;
+    localStorage.setItem("auth_token", "");
+    dispatch(logOutUser());
+  };
+
   render() {
-    const { user, isAuthenticated, isFetching } = this.props;
+    const { user, isAuthenticated, isFetching, dispatch } = this.props;
     if (isFetching) {
       return <p>Loading...</p>;
     } else {
@@ -62,7 +54,10 @@ class App extends React.Component {
           <div className="App">
             <header className="App-header">
               <Link to="/">Gentle Guide</Link>
-              {authLink(isAuthenticated)}
+              <AuthLink
+                isAuthenticated={isAuthenticated}
+                logOut={this.logOut}
+              />
             </header>
             <Switch>
               <Route exact path="/">

@@ -61,15 +61,19 @@ export default function userReducer(state = initialState, action) {
         signUpStep: action.step
       };
     case SEND_USER_PROFILE:
-      console.log(action);
       return { ...state, isFetching: true };
     case RECIEVE_USER_PROFILE:
-      console.log(action);
       return {
         ...state,
         user: action.user,
         isFetching: false,
         isAuthenticated: true
+      };
+    case LOG_OUT_USER:
+      return {
+        ...state,
+        user: {},
+        isAuthenticated: false
       };
     default:
       return state;

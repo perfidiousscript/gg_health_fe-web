@@ -124,6 +124,12 @@ function sendUserProfile() {
   };
 }
 
+export function logOutUser() {
+  return {
+    type: LOG_OUT_USER
+  };
+}
+
 function callError(error) {
   return {
     type: CALL_ERROR,
@@ -163,10 +169,6 @@ export function getUserProfile() {
         }
       });
   };
-}
-
-export function logOutUser() {
-  // dispatch();
 }
 
 export function createUser(user_values) {
