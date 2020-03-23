@@ -1,9 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { getPractices } from "../../js/actions/practice_actions.js";
+
 class Practices extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(getPractices());
+  }
+
   renderHelper() {
     const { isFetching, practices } = this.props;
+    console.log("Practices: ", practices);
     if (isFetching) {
       return <h3>Loading...</h3>;
     } else if (!practices) {
@@ -13,10 +21,18 @@ class Practices extends React.Component {
           <h3> Add your Practice!</h3>
         </div>
       );
-    } else {
+    } else if (practices.length == 1) {
+      const practice = practices[0];
       return (
         <div>
           <h3> Edit your Practice!</h3>
+          <p>Name: {practice.name}</p>
+        </div>
+      );
+    } else if (practices.length > 1) {
+      return (
+        <div>
+          <h3>Whoa you have a bunch of practices!</h3>
         </div>
       );
     }

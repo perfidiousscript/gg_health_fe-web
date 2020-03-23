@@ -1,13 +1,25 @@
 import {
   SEND_CREATE_PRACTICE,
-  RECIEVE_CREATE_PRACTICE,
+  RECEIVE_CREATE_PRACTICE,
   SEND_GET_PRACTICE,
-  RECIEVE_GET_PRACTICE
+  RECEIVE_GET_PRACTICE,
+  CALL_ERROR
 } from "../constants/action_types";
 
 import fetch from "cross-fetch";
 
 const api_url = "http://localhost:3001";
+
+async function getPracticesCall(token) {
+  const response = await fetch(`http://localhost:3001/practices`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return await response;
+}
 
 function sendPracticeCreate(user_info) {
   return { type: SEND_CREATE_PRACTICE, isFetching: true };
@@ -15,11 +27,11 @@ function sendPracticeCreate(user_info) {
 
 function receivePracticeCreate({ practice, status }) {
   return {
-    type: RECIEVE_CREATE_PRACTICE,
+    type: RECEIVE_CREATE_PRACTICE,
     responseStatus: status,
     practice: practice,
     isFetching: false,
-    recievedAt: Date.now()
+    RECEIVEdAt: Date.now()
   };
 }
 
@@ -28,7 +40,7 @@ function callError(error) {
     type: CALL_ERROR,
     error: error,
     fetching: false,
-    recievedAt: Date.now()
+    RECEIVEdAt: Date.now()
   };
 }
 
@@ -36,9 +48,9 @@ function sendPracticesGet(user_info) {
   return { type: SEND_GET_PRACTICE, isFetching: true };
 }
 
-function recievePracticesGet({ practices }) {
+function receivePracticesGet({ practices }) {
   return {
-    type: RECIEVE_GET_PRACTICE,
+    type: RECEIVE_GET_PRACTICE,
     practices: practices,
     isFetching: false
   };
@@ -46,30 +58,31 @@ function recievePracticesGet({ practices }) {
 
 export function getPractices() {
   return dispatch => {
-    dispatch(sendPracticeGet());
-    return getPracticesCall()
+    dispatch(sendPracticesGet());
+    var token = localStorage.auth_token;
+    return getPracticesCall(token)
       .then(response => response.json())
       .then(json => {
         if (json.error) {
           dispatch(callError(json.error));
         } else {
-          dispatch(receivePracticeGet(json));
+          dispatch(receivePracticesGet(json));
         }
       });
   };
 }
 
-export function createPractice(practice_values) {
-  return dispatch => {
-    dispatch(sendPracticeCreate());
-    return createPracticeCall(user_values)
-      .then(response => response.json())
-      .then(json => {
-        if (json.error) {
-          dispatch(callError(json.error));
-        } else {
-          dispatch(receivePracticeCreate(json));
-        }
-      });
-  };
-}
+// export function createPractice(practice_values) {
+//   return dispatch => {
+//     dispatch(sendPracticeCreate());
+//     return createPracticeCall(user_values)
+//       .then(response => response.json())
+//       .then(json => {
+//         if (json.error) {
+//           dispatch(callError(json.error));
+//         } else {
+//           dispatch(receivePracticeCreate(json));
+//         }
+//       });
+//   };
+// }

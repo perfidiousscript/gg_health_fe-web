@@ -1,12 +1,12 @@
 import {
   SEND_CREATE_USER,
-  RECIEVE_CREATE_USER,
+  RECEIVE_CREATE_USER,
   SEND_UPDATE_USER,
-  RECIEVE_UPDATE_USER,
+  RECEIVE_UPDATE_USER,
   SEND_USER_AUTHENTICATE,
-  RECIEVE_USER_AUTHENTICATE,
+  RECEIVE_USER_AUTHENTICATE,
   SEND_USER_PROFILE,
-  RECIEVE_USER_PROFILE,
+  RECEIVE_USER_PROFILE,
   CALL_ERROR,
   LOG_OUT_USER
 } from "../constants/action_types";
@@ -70,11 +70,11 @@ function sendUserCreate(user_info) {
 
 function receiveUserCreate({ user, status }) {
   return {
-    type: RECIEVE_CREATE_USER,
+    type: RECEIVE_CREATE_USER,
     responseStatus: status,
     user: user,
     isFetching: false,
-    recievedAt: Date.now()
+    RECEIVEdAt: Date.now()
   };
 }
 
@@ -84,11 +84,11 @@ function sendUserUpdate(user_info) {
 
 function receiveUserUpdate({ user }, nextStep) {
   return {
-    type: RECIEVE_UPDATE_USER,
+    type: RECEIVE_UPDATE_USER,
     user: user,
     isFetching: false,
     step: nextStep,
-    recievedAt: Date.now()
+    RECEIVEdAt: Date.now()
   };
 }
 
@@ -98,22 +98,22 @@ function sendUserAuth(user_info) {
 
 function receiveUserAuth({ user, auth_token, status }) {
   return {
-    type: RECIEVE_USER_AUTHENTICATE,
+    type: RECEIVE_USER_AUTHENTICATE,
     responseStatus: status,
     user: user,
     jwt: auth_token,
     isFetching: false,
-    recievedAt: Date.now()
+    RECEIVEdAt: Date.now()
   };
 }
 
 function receiveUserProfile(user) {
   return {
-    type: RECIEVE_USER_PROFILE,
+    type: RECEIVE_USER_PROFILE,
     user: user,
     isFetching: false,
     isAuthenticated: true,
-    recievedAt: Date.now()
+    RECEIVEdAt: Date.now()
   };
 }
 
@@ -135,7 +135,7 @@ function callError(error) {
     type: CALL_ERROR,
     error: error,
     fetching: false,
-    recievedAt: Date.now()
+    RECEIVEdAt: Date.now()
   };
 }
 

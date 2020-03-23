@@ -1,12 +1,12 @@
 import {
   SEND_CREATE_USER,
-  RECIEVE_CREATE_USER,
+  RECEIVE_CREATE_USER,
   SEND_UPDATE_USER,
-  RECIEVE_UPDATE_USER,
+  RECEIVE_UPDATE_USER,
   SEND_USER_AUTHENTICATE,
-  RECIEVE_USER_AUTHENTICATE,
+  RECEIVE_USER_AUTHENTICATE,
   SEND_USER_PROFILE,
-  RECIEVE_USER_PROFILE,
+  RECEIVE_USER_PROFILE,
   CALL_ERROR,
   LOG_OUT_USER
 } from "../constants/action_types";
@@ -26,7 +26,7 @@ export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case SEND_USER_AUTHENTICATE:
       return { ...state, isFetching: true };
-    case RECIEVE_USER_AUTHENTICATE:
+    case RECEIVE_USER_AUTHENTICATE:
       return {
         ...state,
         responseStatus: action.responseStatus,
@@ -44,7 +44,7 @@ export default function userReducer(state = initialState, action) {
       };
     case SEND_CREATE_USER:
       return { ...state, isFetching: true };
-    case RECIEVE_CREATE_USER:
+    case RECEIVE_CREATE_USER:
       return {
         ...state,
         user: action.user,
@@ -54,7 +54,7 @@ export default function userReducer(state = initialState, action) {
       };
     case SEND_UPDATE_USER:
       return { ...state, isFetching: true };
-    case RECIEVE_UPDATE_USER:
+    case RECEIVE_UPDATE_USER:
       return {
         ...state,
         user: action.user,
@@ -63,7 +63,7 @@ export default function userReducer(state = initialState, action) {
       };
     case SEND_USER_PROFILE:
       return { ...state, isFetching: true };
-    case RECIEVE_USER_PROFILE:
+    case RECEIVE_USER_PROFILE:
       return {
         ...state,
         user: action.user,

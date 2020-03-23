@@ -1,14 +1,16 @@
 import {
   ADD_LOCATION,
   REQUEST_LOCATIONS,
-  RECIEVE_LOCATIONS
+  RECEIVE_LOCATIONS
 } from "../constants/action_types";
 
 import fetch from "cross-fetch";
 
+const api_url = "http://localhost:3001";
+
 async function callLocations(token) {
   const response = await fetch(
-    `http://localhost:3001/location_search?latitude=45.5419799&longitude=122.6486`,
+    `${api_url}/location_search?latitude=45.5419799&longitude=122.6486`,
     {
       method: "GET",
       headers: {
@@ -26,9 +28,9 @@ function requestLocations() {
 
 function receiveLocations(json) {
   return {
-    type: RECIEVE_LOCATIONS,
+    type: RECEIVE_LOCATIONS,
     locations: json,
-    recievedAt: Date.now()
+    RECEIVEdAt: Date.now()
   };
 }
 

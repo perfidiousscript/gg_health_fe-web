@@ -15,7 +15,7 @@ class ManagerDash extends React.Component {
     return (
       <div>
         <h3>Manager Dashboard!</h3>
-        <Link to="/edit-practices">View/Edit Your Practice</Link>
+        <Link to="/practices">View/Edit Your Practice</Link>
         <p>View/Edit Your Locations</p>
         <p>View/Manage Your Practitioners</p>
       </div>
