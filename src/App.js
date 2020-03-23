@@ -66,7 +66,7 @@ class App extends React.Component {
             </header>
             <Switch>
               <Route exact path="/">
-                <Home />
+                <Home isAuthenticated={isAuthenticated} user={user} />
               </Route>
               <Route exact path="/sign-in">
                 <SignIn />
