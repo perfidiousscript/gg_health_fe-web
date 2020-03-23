@@ -13,14 +13,7 @@ class SignIn extends React.Component {
   }
 
   render() {
-    console.log("props: ", this.props);
-    const {
-      dispatch,
-      isFetching,
-      user,
-      authError,
-      isAuthenticated
-    } = this.props;
+    const { dispatch, isFetching, user, error, isAuthenticated } = this.props;
 
     if (isAuthenticated) {
       return (
@@ -38,8 +31,8 @@ class SignIn extends React.Component {
           <br />
         </div>
       );
-    } else if (authError) {
-      return <p>{authError}</p>;
+    } else if (error) {
+      return <p>{error.user_authentication}</p>;
     } else {
       return (
         <div>
@@ -79,11 +72,11 @@ function mapStateToProps(state) {
     user,
     responseStatus,
     isFetching,
-    authError,
+    error,
     isAuthenticated
   } = state.user;
 
-  return { user, responseStatus, isFetching, authError, isAuthenticated };
+  return { user, responseStatus, isFetching, error, isAuthenticated };
 }
 
 export default connect(mapStateToProps)(SignIn);

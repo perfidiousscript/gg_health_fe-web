@@ -15,6 +15,7 @@ const initialState = {
   user: {},
   jwt: "",
   responseStatus: "",
+  error: "",
   isFetching: false,
   authError: false,
   isAuthenticated: false,
