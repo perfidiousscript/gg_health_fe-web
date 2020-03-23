@@ -32,6 +32,10 @@ function receiveLocations(json) {
   };
 }
 
+export function addLocation(payload) {
+  return { type: ADD_LOCATION, payload };
+}
+
 export function fetchLocations() {
   return dispatch => {
     dispatch(requestLocations());
@@ -42,8 +46,4 @@ export function fetchLocations() {
         dispatch(receiveLocations(json));
       });
   };
-}
-
-export function addLocation(payload) {
-  return { type: ADD_LOCATION, payload };
 }

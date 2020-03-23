@@ -22,9 +22,9 @@ class ManagerDash extends React.Component {
     return (
       <div>
         <h3>Manager Dashboard!</h3>
-        <p>Practice Information</p>
-        <p>Your Locations</p>
-        <p>View/Manage Practitioners</p>
+        <p>View/Edit Your Practice</p>
+        <p>View/Edit Your Locations</p>
+        <p>View/Manage Your Practitioners</p>
       </div>
     );
   }
