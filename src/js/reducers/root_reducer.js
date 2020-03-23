@@ -6,7 +6,7 @@ import practiceReducer from "./practice_reducer";
 const rootReducer = combineReducers({
   locations: locationsReducer,
   user: userReducer,
-  practice: practiceReducer
+  practices: practiceReducer
 });
 
 export default rootReducer;
