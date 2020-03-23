@@ -2,10 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 class StepThree extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { user } = this.props;
     return (

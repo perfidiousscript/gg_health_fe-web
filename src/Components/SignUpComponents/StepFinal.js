@@ -2,10 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 class StepFinal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return <h3>All done!</h3>;
   }

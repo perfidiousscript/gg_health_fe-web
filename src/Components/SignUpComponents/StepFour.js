@@ -2,10 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 class StepFour extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return <h3>Step Four!</h3>;
   }
