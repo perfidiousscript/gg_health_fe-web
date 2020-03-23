@@ -12,7 +12,8 @@ import {
 import { Button } from "react-bootstrap";
 import Home from "./Home.js";
 import SignUp from "./SignUp.js";
-import Locations from "./Locations.js";
+import Locations from "./Components/LocationComponents/Locations.js";
+import LocationsEdit from "./Components/LocationComponents/LocationsEdit.js";
 import SignIn from "./SignIn.js";
 import AuthLink from "./AuthLink.js";
 import ManagerDash from "./ManagerDash.js";
@@ -72,6 +73,11 @@ class App extends React.Component {
               <PrivateRoute
                 path="/manager-dashboard"
                 component={ManagerDash}
+                user={user}
+              />
+              <PrivateRoute
+                path="/edit-locations"
+                component={LocationsEdit}
                 user={user}
               />
               <PrivateRoute

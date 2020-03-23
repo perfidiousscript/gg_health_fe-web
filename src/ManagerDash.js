@@ -1,14 +1,7 @@
 import React from "react";
 import Store from "./js/store/index.js";
 import { connect } from "react-redux";
-
-// The purpose of this Component
-// is to display the Logged in user's
-// practice and locations, and allow them to update
-// that information, if needed.
-
-// In the future it will allow them to check their calender
-// Payments, client notes et c.
+import { Link } from "react-router-dom";
 
 class ManagerDash extends React.Component {
   constructor(props) {
@@ -22,7 +15,7 @@ class ManagerDash extends React.Component {
     return (
       <div>
         <h3>Manager Dashboard!</h3>
-        <p>View/Edit Your Practice</p>
+        <Link to="/edit-locations">View/Edit Your Practice</Link>
         <p>View/Edit Your Locations</p>
         <p>View/Manage Your Practitioners</p>
       </div>

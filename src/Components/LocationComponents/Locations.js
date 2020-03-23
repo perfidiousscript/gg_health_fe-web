@@ -1,11 +1,11 @@
 import React from "react";
-import Store from "./js/store/index.js";
+import Store from "../../js/store/index.js";
 import { connect } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
 
 import PropTypes from "prop-types";
 
-import { fetchLocations } from "./js/actions/location_actions.js";
+import { fetchLocations } from "../../js/actions/location_actions.js";
 
 class Locations extends React.Component {
   constructor(props) {
