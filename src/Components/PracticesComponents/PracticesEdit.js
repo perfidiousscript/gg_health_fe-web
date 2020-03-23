@@ -10,13 +10,13 @@ class PracticesEdit extends React.Component {
       return (
         <div>
           <h3> No Practices Yet!</h3>
-          <h3> Add you Practice!</h3>
+          <h3> Add your Practice!</h3>
         </div>
       );
     } else {
       return (
         <div>
-          <h3> Edit your Locations!</h3>
+          <h3> Edit your Practice!</h3>
         </div>
       );
     }
