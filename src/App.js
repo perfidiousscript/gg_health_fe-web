@@ -14,6 +14,7 @@ import Home from "./Home.js";
 import SignUp from "./SignUp.js";
 import Locations from "./Locations.js";
 import SignIn from "./SignIn.js";
+import ManagerDash from "./ManagerDash.js";
 import { getUserProfile, logOutUser } from "./js/actions/user_actions.js";
 
 function authLink(isAuthenticated) {
@@ -25,6 +26,12 @@ function authLink(isAuthenticated) {
     <Link to="/sign-in">Sign In</Link>
   );
 }
+
+const PrivateRoute = ({ user, component, ...options }) => {
+  const finalComponent = user ? component : SignIn;
+
+  return <Route {...options} component={finalComponent} />;
+};
 
 function logOut() {
   // localStorage.setItem("auth_token", "");
@@ -68,12 +75,15 @@ class App extends React.Component {
                 <SignUp />
               </Route>
               <PrivateRoute
-                to="/locations"
+                path="/manager-dashboard"
+                component={ManagerDash}
                 user={user}
-                isAuthenticated={isAuthenticated}
-              >
-                <Locations />
-              </PrivateRoute>
+              />
+              <PrivateRoute
+                path="/locations"
+                component={Locations}
+                user={user}
+              />
             </Switch>
           </div>
         </Router>
@@ -82,30 +92,8 @@ class App extends React.Component {
   }
 }
 
-function PrivateRoute({ user, isAuthenticated, children, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        isAuthenticated ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/sign-in",
-              state: { from: location }
-            }}
-          />
-        )
-      }
-    />
-  );
-}
-
 function mapStateToProps(state) {
   const { user, isFetching, isAuthenticated } = state.user;
-
-  console.log("state in MStP: ", state);
 
   return { user, isFetching, isAuthenticated };
 }
