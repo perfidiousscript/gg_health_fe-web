@@ -17,7 +17,6 @@ class ManagerDash extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    // dispatch(fetchUserLocations());
   }
   render() {
     return (
