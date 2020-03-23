@@ -14,7 +14,7 @@ import Home from "./Home.js";
 import SignUp from "./SignUp.js";
 import Locations from "./Components/LocationComponents/Locations.js";
 import Practices from "./Components/PracticesComponents/Practices.js";
-import PracticesEdit from "./Components/PracticesComponents/PracticesEdit.js";
+import EditPractice from "./Components/PracticesComponents/EditPractice.js";
 import SignIn from "./SignIn.js";
 import AuthLink from "./AuthLink.js";
 import ManagerDash from "./ManagerDash.js";
@@ -82,8 +82,8 @@ class App extends React.Component {
                 user={user}
               />
               <PrivateRoute
-                path="/edit-practices"
-                component={PracticesEdit}
+                path="/edit-practice"
+                component={EditPractice}
                 user={user}
               />
               <PrivateRoute

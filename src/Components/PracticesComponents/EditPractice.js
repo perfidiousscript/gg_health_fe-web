@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-class PracticesEdit extends React.Component {
+class EditPractice extends React.Component {
   renderHelper() {
     const { isFetching, practices } = this.props;
     if (isFetching) {
@@ -33,4 +33,4 @@ function mapStateToProps(state) {
   return { practices, isFetching };
 }
 
-export default connect(mapStateToProps)(PracticesEdit);
+export default connect(mapStateToProps)(EditPractice);
