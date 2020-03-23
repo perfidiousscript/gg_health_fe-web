@@ -8,10 +8,6 @@ import PropTypes from "prop-types";
 import { fetchLocations } from "../../js/actions/location_actions.js";
 
 class Locations extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(fetchLocations());
