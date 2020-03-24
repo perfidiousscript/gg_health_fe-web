@@ -164,6 +164,7 @@ export function getUserProfile() {
       .then(json => {
         if (json.error) {
           dispatch(callError(json.error));
+          localStorage.removeItem("auth_token");
         } else {
           return dispatch(receiveUserProfile(json.user));
         }
