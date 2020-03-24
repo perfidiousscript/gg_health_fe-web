@@ -13,6 +13,16 @@ class Practices extends React.Component {
   renderHelper() {
     const { isFetching, practices } = this.props;
 
+    function contactList(practice) {
+      for (const field in practice.contact) {
+        return (
+          <p>
+            {field}: {practice.contact[field]}
+          </p>
+        );
+      }
+    }
+
     if (isFetching) {
       return <h3>Loading...</h3>;
     } else if (!practices) {
@@ -28,6 +38,8 @@ class Practices extends React.Component {
         <div>
           <h3> Your Practice!</h3>
           <p>Name: {practice.name}</p>
+          <h4>Contact Info:</h4>
+          {contactList(practice)}
           <Link to="/edit-practice">Edit Your Practice</Link>
         </div>
       );
