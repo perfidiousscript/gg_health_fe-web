@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Formik, Form, Field } from "formik";
 
 class AddPractice extends React.Component {
   render() {
@@ -14,6 +15,18 @@ class AddPractice extends React.Component {
           If you want to add a locations under one business, go to 'Add
           Location'
         </p>
+        <h4></h4>
+        <Formik
+          initialValues={{
+            firstName: "",
+            lastName: "",
+            emailAddress: "",
+            password: ""
+          }}
+          onSubmit={values => {
+            // dispatch(createUser(values));
+          }}
+        ></Formik>
       </div>
     );
   }
