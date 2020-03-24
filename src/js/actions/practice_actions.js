@@ -21,6 +21,18 @@ async function getPracticesCall(token) {
   return await response;
 }
 
+async function createPracticeCall(practiceValues, token) {
+  const response = await fetch(`http://localhost:3001/practices`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: practiceValues
+  });
+  return await response;
+}
+
 function sendPracticeCreate(user_info) {
   return { type: SEND_CREATE_PRACTICE, isFetching: true };
 }
@@ -72,17 +84,17 @@ export function getPractices() {
   };
 }
 
-// export function createPractice(practice_values) {
-//   return dispatch => {
-//     dispatch(sendPracticeCreate());
-//     return createPracticeCall(user_values)
-//       .then(response => response.json())
-//       .then(json => {
-//         if (json.error) {
-//           dispatch(callError(json.error));
-//         } else {
-//           dispatch(receivePracticeCreate(json));
-//         }
-//       });
-//   };
-// }
+export function createPractice(practiceValues) {
+  return dispatch => {
+    dispatch(sendPracticeCreate());
+    return createPracticeCall(practiceValues)
+      .then(response => response.json())
+      .then(json => {
+        if (json.error) {
+          dispatch(callError(json.error));
+        } else {
+          dispatch(receivePracticeCreate(json));
+        }
+      });
+  };
+}
