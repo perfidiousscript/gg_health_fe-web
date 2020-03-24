@@ -28,8 +28,8 @@ class Practices extends React.Component {
     } else if (!practices) {
       return (
         <div>
-          <h3> No Practices Yet!</h3>
-          <h3> Add your Practice!</h3>
+          <h3> No Practices Yet!</h3> <br />
+          <Link to="/add-practice">Create Your Practice</Link>
         </div>
       );
     } else if (practices.length == 1) {
@@ -41,12 +41,16 @@ class Practices extends React.Component {
           <h4>Contact Info:</h4>
           {contactList(practice)}
           <Link to="/edit-practice">Edit Your Practice</Link>
+          <br />
+          <Link to="/add-practice">Add a Practice</Link>
         </div>
       );
     } else if (practices.length > 1) {
       return (
         <div>
           <h3>Whoa you have a bunch of practices!</h3>
+          <br />
+          <Link to="/add-practice">Add a Practice</Link>
         </div>
       );
     }

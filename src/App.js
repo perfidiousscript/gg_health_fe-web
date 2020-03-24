@@ -15,6 +15,7 @@ import SignUp from "./SignUp.js";
 import Locations from "./Components/LocationComponents/Locations.js";
 import Practices from "./Components/PracticesComponents/Practices.js";
 import EditPractice from "./Components/PracticesComponents/EditPractice.js";
+import AddPractice from "./Components/PracticesComponents/AddPractice.js";
 import SignIn from "./SignIn.js";
 import AuthLink from "./AuthLink.js";
 import ManagerDash from "./ManagerDash.js";
@@ -23,6 +24,21 @@ import { getUserProfile, logOutUser } from "./js/actions/user_actions.js";
 const PrivateRoute = ({ user, component, ...options }) => {
   const finalComponent = user ? component : SignIn;
 
+  return <Route {...options} component={finalComponent} />;
+};
+
+const ManagerRoute = ({ user, component, ...options }) => {
+  let finalComponent;
+
+  if (user) {
+    if (user.role === "manager") {
+      finalComponent = component;
+    } else {
+      finalComponent = Home;
+    }
+  } else {
+    finalComponent = SignIn;
+  }
   return <Route {...options} component={finalComponent} />;
 };
 
@@ -71,19 +87,24 @@ class App extends React.Component {
               <Route exact path="/sign-up">
                 <SignUp />
               </Route>
-              <PrivateRoute
+              <ManagerRoute
                 path="/manager-dashboard"
                 component={ManagerDash}
                 user={user}
               />
-              <PrivateRoute
+              <ManagerRoute
                 path="/practices"
                 component={Practices}
                 user={user}
               />
-              <PrivateRoute
+              <ManagerRoute
                 path="/edit-practice"
                 component={EditPractice}
+                user={user}
+              />
+              <ManagerRoute
+                path="/add-practice"
+                component={AddPractice}
                 user={user}
               />
               <PrivateRoute
