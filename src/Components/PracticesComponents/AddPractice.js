@@ -2,8 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 
+import { createPractice } from "../../js/actions/practice_actions.js";
+
 class AddPractice extends React.Component {
   render() {
+    const { user, dispatch } = this.props;
     return (
       <div>
         <p>Practices are discrete business entities.</p>
@@ -15,16 +18,16 @@ class AddPractice extends React.Component {
           If you want to add a locations under one business, go to 'Add
           Location'
         </p>
-        <h4></h4>
+        // name: string, contact: jsonb, user_id: integer, staff: text
         <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
-            emailAddress: "",
-            password: ""
+            name: "",
+            contact: {},
+            userId: user.id,
+            staff: `[${user.id}]`
           }}
           onSubmit={values => {
-            // dispatch(createUser(values));
+            dispatch(createPractice(values));
           }}
         ></Formik>
       </div>
@@ -33,8 +36,9 @@ class AddPractice extends React.Component {
 }
 function mapStateToProps(state) {
   const { practices, isFetching } = state.practices;
+  const { user } = state.user;
 
-  return { practices, isFetching };
+  return { user, practices, isFetching };
 }
 
 export default connect(mapStateToProps)(AddPractice);
