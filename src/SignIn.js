@@ -3,7 +3,7 @@ import Store from "./js/store/index.js";
 import { Formik, Form, Field } from "formik";
 import { connect } from "react-redux";
 import fetch from "cross-fetch";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import { authenticateUser } from "./js/actions/user_actions.js";
 
@@ -16,21 +16,7 @@ class SignIn extends React.Component {
     const { dispatch, isFetching, user, error, isAuthenticated } = this.props;
 
     if (isAuthenticated) {
-      return (
-        <div>
-          <p>Welcome {user.first_name}!</p>
-          <br />
-          <Link
-            to={{
-              pathname: "/locations",
-              state: { user: user, isAuthenticated: isAuthenticated }
-            }}
-          >
-            View Locations
-          </Link>
-          <br />
-        </div>
-      );
+      return <Redirect to="/" />;
     } else if (error) {
       return <p>{error.user_authentication}</p>;
     } else {
