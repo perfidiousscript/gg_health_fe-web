@@ -9,8 +9,16 @@ import { fetchLocations } from "../../js/actions/location_actions.js";
 
 class Locations extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchLocations());
+    const { dispatch, location } = this.props;
+
+    let type;
+    let practiceId;
+    if (location.state) {
+      type = location.state.type;
+      practiceId = location.state.practice;
+    }
+
+    dispatch(fetchLocations(type, practiceId));
   }
 
   renderHelper() {
