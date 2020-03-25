@@ -9,14 +9,14 @@ class ManagerDash extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { user, dispatch } = this.props;
   }
   render() {
     return (
       <div>
         <h3>Manager Dashboard!</h3>
         <Link to="/practices">View/Edit Your Practice</Link>
-        <p>View/Edit Your Locations</p>
+        <br />
         <p>View/Manage Your Practitioners</p>
       </div>
     );
