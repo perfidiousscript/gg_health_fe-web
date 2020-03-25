@@ -7,8 +7,86 @@ import { Container, Col, Row } from "react-bootstrap";
 import { createPractice } from "../../js/actions/practice_actions.js";
 
 class AddPractice extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { contactRowValues: [{ type: "", value: "" }] };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  contactRows = () => {
+    const { contactRowValues } = this.state;
+
+    return (
+      <div>
+        {contactRowValues.map((rowArray, index) => {
+          return (
+            <div key={index}>
+              <Row>
+                <Col md={{ span: 2, offset: 4 }}>
+                  <label for="contactType">Contact Type</label>
+                </Col>
+                <Col md={{ span: 2 }}>
+                  <label for="contactInfo">Contact Info</label>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={{ span: 2, offset: 4 }}>
+                  <input
+                    type="text"
+                    id={index}
+                    data-kind="type"
+                    value={rowArray.type}
+                    onChange={this.handleChange}
+                    name={`contactType${index}`}
+                  />
+                </Col>
+                <Col md={{ span: 2 }}>
+                  <input
+                    type="text"
+                    id={index}
+                    data-kind="value"
+                    value={rowArray.value}
+                    onChange={this.handleChange}
+                    name={`contactInfo${index}`}
+                  />
+                </Col>
+              </Row>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  addContactField = e => {
+    e.preventDefault();
+    const { contactRowValues } = this.state;
+
+    let updatedContactRowValues = contactRowValues;
+
+    updatedContactRowValues.push({ type: "", value: "" });
+
+    this.setState({
+      contactRowValues: updatedContactRowValues
+    });
+  };
+
+  handleChange = e => {
+    e.preventDefault();
+    const { contactRowValues } = this.state;
+    let kind = e.target.getAttribute("data-kind");
+    let id = e.target.id;
+    let updatedContactRowValues = contactRowValues;
+
+    updatedContactRowValues[id][kind] = e.target.value;
+
+    this.setState({
+      contactRowValues: updatedContactRowValues
+    });
+  };
+
   render() {
-    const { user, dispatch, isFetching } = this.props;
+    const { user, dispatch, isFetching, contactRowValues } = this.props;
     return (
       <div>
         <p>Practices are discrete business entities.</p>
@@ -23,12 +101,10 @@ class AddPractice extends React.Component {
         <Formik
           initialValues={{
             name: "",
-            contact: {},
             userId: user.id,
             staff: ""
           }}
           onSubmit={values => {
-            values.staff.push(user.id);
             dispatch(createPractice(values));
           }}
         >
@@ -44,25 +120,12 @@ class AddPractice extends React.Component {
                   <Field type="text" name="name" /> <br />
                 </Col>
               </Row>
-              <Row>
-                <Col md={{ span: 2, offset: 4 }}>
-                  <label for="name">Contact Type</label>
-                </Col>
-                <Col md={{ span: 2 }}>
-                  <label for="contactType">Contact Info</label>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={{ span: 2, offset: 4 }}>
-                  <Field type="text" name="contactType" />
-                </Col>
-                <Col md={{ span: 2 }}>
-                  <Field type="text" name="contactInfo" />
-                </Col>
-                <Col md={{ span: 2 }}>
-                  <button type="addContact">Add Contact</button>
-                </Col>
-              </Row>
+              {this.contactRows()}
+              <Col md={{ span: 2, offset: 4 }}>
+                <button type="addContact" onClick={this.addContactField}>
+                  Add Contact Type
+                </button>
+              </Col>
               <Row>
                 <Col md={{ span: 2, offset: 4 }}>
                   <label for="staff">Staff</label>
