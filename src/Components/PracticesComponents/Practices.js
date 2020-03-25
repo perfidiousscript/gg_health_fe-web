@@ -42,6 +42,15 @@ class Practices extends React.Component {
           {contactList(practice)}
           <Link to="/edit-practice">Edit Your Practice</Link>
           <br />
+          <Link
+            to={{
+              pathname: "/locations",
+              state: { type: "practice", practice: practice.id }
+            }}
+          >
+            View/Edit Locations For this Practice
+          </Link>
+          <br />
           <Link to="/add-practice">Add a Practice</Link>
         </div>
       );
