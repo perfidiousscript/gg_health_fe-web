@@ -11,55 +11,54 @@ class EditPractice extends React.Component {
     super(props);
 
     this.state = { practice: this.props.location.state.practice };
+    this.state.contactRowValues = this.props.location.state.practice.contact;
+
     this.handleChange = this.handleChange.bind(this);
   }
 
   contactRows = () => {
-    const { contact } = this.state.practice;
+    const { contactRowValues } = this.state;
 
-    console.log("contact: ", contact);
-
-    let contactForm = [];
-
-    {
-      for (const entry in contact) {
-        contactForm.push(
-          <div>
-            <Row>
-              <Col md={{ span: 2, offset: 4 }}>
-                <label for="contactType">Contact Type</label>
-              </Col>
-              <Col md={{ span: 2 }}>
-                <label for="contactInfo">Contact Info</label>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={{ span: 2, offset: 4 }}>
-                <input
-                  type="text"
-                  id={entry}
-                  data-kind="type"
-                  value={entry}
-                  onChange={this.handleChange}
-                  name={`contactType${entry}`}
-                />
-              </Col>
-              <Col md={{ span: 2 }}>
-                <input
-                  type="text"
-                  id={`${entry}-values`}
-                  data-kind="value"
-                  value={contact[entry]}
-                  onChange={this.handleChange}
-                  name={`contactInfo${entry}`}
-                />
-              </Col>
-            </Row>
-          </div>
-        );
-      }
-    }
-    return contactForm;
+    return (
+      <div>
+        {contactRowValues.map((rowArray, index) => {
+          return (
+            <div key={index}>
+              <Row>
+                <Col md={{ span: 2, offset: 4 }}>
+                  <label for="contactType">Contact Type</label>
+                </Col>
+                <Col md={{ span: 2 }}>
+                  <label for="contactInfo">Contact Info</label>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={{ span: 2, offset: 4 }}>
+                  <input
+                    type="text"
+                    id={index}
+                    data-kind="type"
+                    value={rowArray.type}
+                    onChange={this.handleChange}
+                    name={`contactType${index}`}
+                  />
+                </Col>
+                <Col md={{ span: 2 }}>
+                  <input
+                    type="text"
+                    id={index}
+                    data-kind="value"
+                    value={rowArray.value}
+                    onChange={this.handleChange}
+                    name={`contactInfo${index}`}
+                  />
+                </Col>
+              </Row>
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   addContactField = e => {
@@ -90,7 +89,7 @@ class EditPractice extends React.Component {
   };
 
   render() {
-    const { user, dispatch, isFetching, contactRowValues } = this.props;
+    const { user, dispatch, isFetching } = this.props;
     const { practice } = this.state;
     return (
       <div>
@@ -101,7 +100,11 @@ class EditPractice extends React.Component {
             staff: practice.staff
           }}
           onSubmit={values => {
-            dispatch(createPractice(values));
+            const { contactRowValues } = this.state;
+
+            values.contact = contactRowValues;
+
+            // dispatch(createPractice(values));
           }}
         >
           {({ isFetching, responseStatus }) => (

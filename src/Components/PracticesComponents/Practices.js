@@ -10,18 +10,22 @@ class Practices extends React.Component {
     dispatch(getPractices());
   }
 
+  contactList(practice) {
+    let practiceContacts = [];
+
+    practice.map(contact =>
+      practiceContacts.push(
+        <p>
+          {contact.type}: {contact.value}
+        </p>
+      )
+    );
+
+    return practiceContacts;
+  }
+
   renderHelper() {
     const { isFetching, practices } = this.props;
-
-    function contactList(practice) {
-      for (const field in practice.contact) {
-        return (
-          <p>
-            {field}: {practice.contact[field]}
-          </p>
-        );
-      }
-    }
 
     if (isFetching) {
       return <h3>Loading...</h3>;
@@ -39,7 +43,7 @@ class Practices extends React.Component {
           <h3> Your Practice!</h3>
           <p>Name: {practice.name}</p>
           <h4>Contact Info:</h4>
-          {contactList(practice)}
+          {this.contactList(practice.contact)}
           <Link
             to={{
               pathname: "/edit-practice",
