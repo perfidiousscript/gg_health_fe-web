@@ -40,7 +40,14 @@ class Practices extends React.Component {
           <p>Name: {practice.name}</p>
           <h4>Contact Info:</h4>
           {contactList(practice)}
-          <Link to="/edit-practice">Edit Your Practice</Link>
+          <Link
+            to={{
+              pathname: "/edit-practice",
+              state: { type: "edit", practice: practice }
+            }}
+          >
+            Edit Your Practice
+          </Link>
           <br />
           <Link
             to={{
