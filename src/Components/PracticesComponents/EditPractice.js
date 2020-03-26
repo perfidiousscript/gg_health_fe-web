@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import { Link } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 
-import { createPractice } from "../../js/actions/practice_actions.js";
+import { editPractice } from "../../js/actions/practice_actions.js";
 
 class EditPractice extends React.Component {
   constructor(props) {
@@ -96,15 +96,16 @@ class EditPractice extends React.Component {
         <Formik
           initialValues={{
             name: practice.name,
-            userId: user.id,
+            user_id: user.id,
             staff: practice.staff
           }}
           onSubmit={values => {
             const { contactRowValues } = this.state;
 
             values.contact = contactRowValues;
+            values.id = this.state.practice.id;
 
-            // dispatch(createPractice(values));
+            dispatch(editPractice(values));
           }}
         >
           {({ isFetching, responseStatus }) => (
@@ -155,10 +156,10 @@ class EditPractice extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  const { isFetching } = state.practices;
+  const { isFetching, responseStatus } = state.practices;
   const { user } = state.user;
 
-  return { user, isFetching };
+  return { user, isFetching, responseStatus };
 }
 
 export default connect(mapStateToProps)(EditPractice);

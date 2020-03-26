@@ -3,6 +3,8 @@ import {
   RECEIVE_CREATE_PRACTICE,
   SEND_GET_PRACTICE,
   RECEIVE_GET_PRACTICE,
+  SEND_PRACTICE_EDIT,
+  RECEIVE_PRACTICE_EDIT,
   CALL_ERROR
 } from "../constants/action_types";
 
@@ -11,7 +13,7 @@ import fetch from "cross-fetch";
 const api_url = "http://localhost:3001";
 
 async function getPracticesCall(token) {
-  const response = await fetch(`http://localhost:3001/practices`, {
+  const response = await fetch(`${api_url}/practices`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -22,13 +24,27 @@ async function getPracticesCall(token) {
 }
 
 async function createPracticeCall(practiceValues, token) {
-  const response = await fetch(`http://localhost:3001/practices`, {
+  const response = await fetch(`${api_url}/practices`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`
     },
     body: practiceValues
+  });
+  return await response;
+}
+
+async function editPracticeCall(practiceValues, token) {
+  let callJson = JSON.stringify(practiceValues);
+  console.log("callJson: ", callJson);
+  const response = await fetch(`${api_url}/practices/${practiceValues.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: callJson
   });
   return await response;
 }
@@ -43,7 +59,21 @@ function receivePracticeCreate({ practice, status }) {
     responseStatus: status,
     practice: practice,
     isFetching: false,
-    RECEIVEdAt: Date.now()
+    ReceivedAt: Date.now()
+  };
+}
+
+function sendPracticeEdit() {
+  return { type: SEND_PRACTICE_EDIT, isFetching: true };
+}
+
+function receivePracticeEdit({ practice, status }) {
+  return {
+    type: RECEIVE_PRACTICE_EDIT,
+    practice: practice,
+    responseStatus: status,
+    isFetching: false,
+    ReceivedAt: Date.now()
   };
 }
 
@@ -52,7 +82,7 @@ function callError(error) {
     type: CALL_ERROR,
     error: error,
     fetching: false,
-    RECEIVEdAt: Date.now()
+    ReceivedAt: Date.now()
   };
 }
 
@@ -69,9 +99,9 @@ function receivePracticesGet({ practices }) {
 }
 
 export function getPractices() {
+  var token = localStorage.auth_token;
   return dispatch => {
     dispatch(sendPracticesGet());
-    var token = localStorage.auth_token;
     return getPracticesCall(token)
       .then(response => response.json())
       .then(json => {
@@ -86,14 +116,31 @@ export function getPractices() {
 
 export function createPractice(practiceValues) {
   return dispatch => {
+    var token = localStorage.auth_token;
     dispatch(sendPracticeCreate());
-    return createPracticeCall(practiceValues)
+    return createPracticeCall(practiceValues, token)
       .then(response => response.json())
       .then(json => {
         if (json.error) {
           dispatch(callError(json.error));
         } else {
           dispatch(receivePracticeCreate(json));
+        }
+      });
+  };
+}
+
+export function editPractice(practiceValues) {
+  return dispatch => {
+    var token = localStorage.auth_token;
+    dispatch(sendPracticeEdit());
+    return editPracticeCall(practiceValues, token)
+      .then(response => response.json())
+      .then(json => {
+        if (json.error) {
+          dispatch(callError(json.error));
+        } else {
+          dispatch(receivePracticeEdit(json));
         }
       });
   };
