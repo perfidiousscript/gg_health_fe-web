@@ -1,5 +1,6 @@
 import React from "react";
 import Store from "../../js/store/index.js";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Container, Col, Row } from "react-bootstrap";
 
@@ -21,6 +22,20 @@ class Locations extends React.Component {
     dispatch(fetchLocations(type, practiceId));
   }
 
+  editButton(locationId) {
+    const type = this.props.location.state.type;
+
+    if (type == "practice") {
+      return (
+        <Col md={{ span: 2 }}>
+          <Link to={{ pathname: "/edit-location", locationId: locationId }}>
+            Edit Location
+          </Link>
+        </Col>
+      );
+    }
+  }
+
   renderHelper() {
     const { locations } = this.props;
     if (!locations[0]) {
@@ -31,19 +46,16 @@ class Locations extends React.Component {
         <h1>Locations</h1>
         <Container className="locations">
           <Row>
-            <Col> </Col>
-            <Col>Name</Col>
-            <Col>Address</Col>
-            <Col>Services</Col>
-            <Col> </Col>
+            <Col md={{ span: 2, offset: 3 }}>Name</Col>
+            <Col md={{ span: 2 }}>Address</Col>
+            <Col md={{ span: 2 }}>Services</Col>
           </Row>
           {locations.map((location, index) => (
             <Row key={index}>
-              <Col> </Col>
-              <Col>{location.name}</Col>
-              <Col>{location.address}</Col>
-              <Col>{location.services.services}</Col>
-              <Col> </Col>
+              <Col md={{ span: 2, offset: 3 }}>{location.name}</Col>
+              <Col md={{ span: 2 }}>{location.address}</Col>
+              <Col md={{ span: 2 }}>{location.services.services}</Col>
+              {this.editButton(location.id)}
             </Row>
           ))}
         </Container>
