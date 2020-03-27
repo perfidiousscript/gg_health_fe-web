@@ -13,6 +13,7 @@ import { Button } from "react-bootstrap";
 import Home from "./Home.js";
 import SignUp from "./SignUp.js";
 import Locations from "./Components/LocationComponents/Locations.js";
+import EditLocation from "./Components/LocationComponents/EditLocation.js";
 import Practices from "./Components/PracticesComponents/Practices.js";
 import EditPractice from "./Components/PracticesComponents/EditPractice.js";
 import AddPractice from "./Components/PracticesComponents/AddPractice.js";
@@ -49,6 +50,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const { dispatch, isAuthenticated } = this.props;
+
     if (!isAuthenticated) {
       if (localStorage.auth_token) {
         dispatch(getUserProfile());
@@ -105,6 +107,11 @@ class App extends React.Component {
               <ManagerRoute
                 path="/add-practice"
                 component={AddPractice}
+                user={user}
+              />
+              <PrivateRoute
+                path="/edit-location"
+                component={EditLocation}
                 user={user}
               />
               <PrivateRoute

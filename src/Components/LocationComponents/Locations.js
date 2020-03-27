@@ -25,10 +25,12 @@ class Locations extends React.Component {
   editButton(location) {
     const type = this.props.location.state.type;
 
+    console.log("location: ", location);
+
     if (type == "practice") {
       return (
         <Col md={{ span: 2 }}>
-          <Link to={{ pathname: "/edit-location", locationId: { location } }}>
+          <Link to={{ pathname: "/edit-location", location: { location } }}>
             Edit Location
           </Link>
         </Col>
