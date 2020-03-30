@@ -113,7 +113,7 @@ function receiveUserProfile(user) {
     user: user,
     isFetching: false,
     isAuthenticated: true,
-    RECEIVEdAt: Date.now()
+    receivedAt: Date.now()
   };
 }
 
@@ -124,9 +124,10 @@ function sendUserProfile() {
   };
 }
 
-export function logOutUser() {
+function logOut() {
   return {
-    type: LOG_OUT_USER
+    type: LOG_OUT_USER,
+    isAuthenticated: false
   };
 }
 
@@ -135,7 +136,7 @@ function callError(error) {
     type: CALL_ERROR,
     error: error,
     fetching: false,
-    RECEIVEdAt: Date.now()
+    receivedAt: Date.now()
   };
 }
 
@@ -185,6 +186,12 @@ export function createUser(user_values) {
           dispatch(receiveUserCreate(json));
         }
       });
+  };
+}
+
+export function logOutUser() {
+  return dispatch => {
+    dispatch(logOut());
   };
 }
 
