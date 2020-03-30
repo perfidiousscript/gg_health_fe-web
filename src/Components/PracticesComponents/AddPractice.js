@@ -85,8 +85,23 @@ class AddPractice extends React.Component {
     });
   };
 
+  handleResponse() {
+    const { isFetching, responseStatus, error } = this.props;
+
+    if (!isFetching) {
+      if (responseStatus === 200) {
+        console.log("Hits!");
+        this.props.history.push("/manager-dashboard");
+      } else {
+        alert(`Error! ${error}`);
+      }
+    }
+  }
+
   render() {
-    const { user, dispatch, isFetching, contactRowValues } = this.props;
+    const { user, dispatch, isFetching } = this.props;
+    const { contactRowValues } = this.state;
+
     return (
       <div>
         <p>Practices are discrete business entities.</p>
@@ -105,7 +120,9 @@ class AddPractice extends React.Component {
             staff: []
           }}
           onSubmit={values => {
+            values.contact = contactRowValues;
             dispatch(createPractice(values));
+            this.handleResponse();
           }}
         >
           {({ isFetching, responseStatus }) => (
@@ -156,10 +173,10 @@ class AddPractice extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  const { isFetching } = state.practices;
+  const { isFetching, responseStatus, error } = state.practices;
   const { user } = state.user;
 
-  return { user, isFetching };
+  return { user, isFetching, responseStatus, error };
 }
 
 export default connect(mapStateToProps)(AddPractice);
