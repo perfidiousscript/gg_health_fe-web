@@ -85,22 +85,15 @@ class AddPractice extends React.Component {
     });
   };
 
-  handleResponse() {
-    const { isFetching, responseStatus, error } = this.props;
+  render() {
+    const { user, dispatch, isFetching, responseStatus, error } = this.props;
+    const { contactRowValues } = this.state;
 
     if (!isFetching) {
-      if (responseStatus === 200) {
-        console.log("Hits!");
+      if (responseStatus == "created") {
         this.props.history.push("/manager-dashboard");
-      } else {
-        alert(`Error! ${error}`);
       }
     }
-  }
-
-  render() {
-    const { user, dispatch, isFetching } = this.props;
-    const { contactRowValues } = this.state;
 
     return (
       <div>
@@ -122,7 +115,6 @@ class AddPractice extends React.Component {
           onSubmit={values => {
             values.contact = contactRowValues;
             dispatch(createPractice(values));
-            this.handleResponse();
           }}
         >
           {({ isFetching, responseStatus }) => (

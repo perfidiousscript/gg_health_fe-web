@@ -10,10 +10,10 @@ class Practices extends React.Component {
     dispatch(getPractices());
   }
 
-  contactList(practice) {
+  contactList(contacts) {
     let practiceContacts = [];
 
-    practice.map(contact =>
+    contacts.map(contact =>
       practiceContacts.push(
         <p>
           {contact.type}: {contact.value}
@@ -26,6 +26,8 @@ class Practices extends React.Component {
 
   renderHelper() {
     const { isFetching, practices } = this.props;
+
+    console.log("practices: ", practices);
 
     if (isFetching) {
       return <h3>Loading...</h3>;

@@ -4,7 +4,8 @@ import {
   SEND_GET_PRACTICE,
   RECEIVE_GET_PRACTICE,
   SEND_PRACTICE_EDIT,
-  RECEIVE_PRACTICE_EDIT
+  RECEIVE_PRACTICE_EDIT,
+  CALL_ERROR
 } from "../constants/action_types";
 
 const initialState = {
@@ -15,6 +16,13 @@ const initialState = {
 
 export default function practiceReducer(state = initialState, action) {
   switch (action.type) {
+    case CALL_ERROR:
+      return {
+        ...state,
+        responseStatus: action.responseStatus,
+        error: action.error,
+        isFetching: false
+      };
     case SEND_GET_PRACTICE:
     case SEND_CREATE_PRACTICE:
     case SEND_PRACTICE_EDIT:
@@ -23,7 +31,7 @@ export default function practiceReducer(state = initialState, action) {
       return {
         ...state,
         practices: action.practice,
-        responseStatus: action.responseCode,
+        responseStatus: action.responseStatus,
         isFetching: false
       };
     case RECEIVE_CREATE_PRACTICE:
@@ -31,7 +39,7 @@ export default function practiceReducer(state = initialState, action) {
       return {
         ...state,
         practices: action.practices,
-        responseStatus: action.responseCode,
+        responseStatus: action.responseStatus,
         isFetching: false
       };
     default:
