@@ -101,8 +101,8 @@ class AddPractice extends React.Component {
         <Formik
           initialValues={{
             name: "",
-            userId: user.id,
-            staff: ""
+            user_id: user.id,
+            staff: []
           }}
           onSubmit={values => {
             dispatch(createPractice(values));

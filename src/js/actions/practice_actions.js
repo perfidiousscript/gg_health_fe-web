@@ -24,13 +24,14 @@ async function getPracticesCall(token) {
 }
 
 async function createPracticeCall(practiceValues, token) {
+  let callJson = JSON.stringify(practiceValues);
   const response = await fetch(`${api_url}/practices`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`
     },
-    body: practiceValues
+    body: callJson
   });
   return await response;
 }
