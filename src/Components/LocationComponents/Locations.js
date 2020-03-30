@@ -23,26 +23,29 @@ class Locations extends React.Component {
   }
 
   editButton(location) {
-    const type = this.props.location.state.type;
+    if (this.props.location.state) {
+      const type = this.props.location.state.type;
 
-    if (type == "practice") {
-      return (
-        <Col md={{ span: 2 }}>
-          <Link
-            to={{
-              pathname: "/edit-location",
-              state: { location: { location } }
-            }}
-          >
-            Edit Location
-          </Link>
-        </Col>
-      );
+      if (type == "practice") {
+        return (
+          <Col md={{ span: 2 }}>
+            <Link
+              to={{
+                pathname: "/edit-location",
+                state: { location: { location } }
+              }}
+            >
+              Edit Location
+            </Link>
+          </Col>
+        );
+      }
     }
   }
 
   renderHelper() {
     const { locations } = this.props;
+
     if (!locations[0]) {
       return <p>"Loading..."</p>;
     }
@@ -79,9 +82,9 @@ class Locations extends React.Component {
 // };
 
 function mapStateToProps(state) {
-  const { locations, user } = state.locations;
+  const { locations } = state.locations;
 
-  return { locations, user };
+  return { locations };
 }
 
 export default connect(mapStateToProps)(Locations);
