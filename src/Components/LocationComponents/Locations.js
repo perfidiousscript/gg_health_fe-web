@@ -48,27 +48,35 @@ class Locations extends React.Component {
 
     if (!locations[0]) {
       return <p>"Loading..."</p>;
-    }
-    return (
-      <div>
-        <h1>Locations</h1>
-        <Container className="locations">
-          <Row>
-            <Col md={{ span: 2, offset: 2 }}>Name</Col>
-            <Col md={{ span: 3 }}>Address</Col>
-            <Col md={{ span: 2 }}>Services</Col>
-          </Row>
-          {locations.map((location, index) => (
-            <Row key={index}>
-              <Col md={{ span: 2, offset: 2 }}>{location.name}</Col>
-              <Col md={{ span: 3 }}>{location.address}</Col>
-              <Col md={{ span: 2 }}>{location.services.services}</Col>
-              {this.editButton(location)}
+    } else {
+      // groupLocations();
+      return (
+        <div>
+          <h1>Locations</h1>
+          <Container className="locations">
+            <Row>
+              <Col md={{ span: 3, offset: 2 }}>
+                <u>Name</u>
+              </Col>
+              <Col md={{ span: 3 }}>
+                <u>Address</u>
+              </Col>
+              <Col md={{ span: 2 }}>
+                <u>Services</u>
+              </Col>
             </Row>
-          ))}
-        </Container>
-      </div>
-    );
+            {locations.map((location, index) => (
+              <Row key={index}>
+                <Col md={{ span: 3, offset: 2 }}>{location.name}</Col>
+                <Col md={{ span: 3 }}>{location.address}</Col>
+                <Col md={{ span: 2 }}>{location.services.primary_service}</Col>
+                {this.editButton(location)}
+              </Row>
+            ))}
+          </Container>
+        </div>
+      );
+    }
   }
 
   render() {
