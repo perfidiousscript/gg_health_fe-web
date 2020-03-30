@@ -62,10 +62,12 @@ class App extends React.Component {
     const { dispatch, user } = this.props;
     localStorage.setItem("auth_token", "");
     dispatch(logOutUser());
+    this.props.history.push("/");
   };
 
   render() {
     const { user, isAuthenticated, isFetching, dispatch } = this.props;
+
     if (isFetching) {
       return <p>Loading...</p>;
     } else {
