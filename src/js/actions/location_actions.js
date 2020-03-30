@@ -10,7 +10,7 @@ const api_url = "http://localhost:3001";
 
 async function searchLocations(token) {
   const response = await fetch(
-    `${api_url}/location_search?latitude=45.5419799&longitude=122.6486`,
+    `${api_url}/location_search?latitude=45.52024719&longitude=-122.67419496`,
     {
       method: "GET",
       headers: {
