@@ -22,9 +22,9 @@ class StepTwo extends React.Component {
           onSubmit={values => {
             let nextStep;
             if (values.role === "consumer") {
-              nextStep = 5;
-            } else {
               nextStep = 4;
+            } else {
+              nextStep = 3;
             }
             dispatch(updateUser(values, nextStep));
           }}
