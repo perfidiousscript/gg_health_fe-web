@@ -37,11 +37,12 @@ function requestLocations() {
   return { type: REQUEST_LOCATIONS };
 }
 
-function receiveLocations(json) {
+function receiveLocations({ locations, status }) {
   return {
     type: RECEIVE_LOCATIONS,
-    locations: json,
-    RECEIVEdAt: Date.now()
+    locations: locations,
+    responseStatus: status,
+    receivedAt: Date.now()
   };
 }
 
