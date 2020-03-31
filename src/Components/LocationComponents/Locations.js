@@ -43,13 +43,32 @@ class Locations extends React.Component {
     }
   }
 
-  renderHelper() {
-    const { locations } = this.props;
+  renderLocations(locations) {
+    let constructedLocations = [];
+    for (const group in locations) {
+      let index = 1;
+      locations[group].map((location, index) => {
+        index++;
+        constructedLocations.push(
+          <Row key={index}>
+            <Col md={{ span: 3, offset: 2 }}>{location.name}</Col>
+            <Col md={{ span: 3 }}>{location.address}</Col>
+            <Col md={{ span: 2 }}>{location.services.primary_service}</Col>
+            {this.editButton(location)}
+          </Row>
+        );
+      });
+    }
+    return constructedLocations;
+  }
 
-    if (!locations[0]) {
+  renderHelper() {
+    const { locations, isFetching } = this.props;
+
+    if (!isFetching & locations) {
       return <p>"Loading..."</p>;
     } else {
-      // groupLocations();
+      console.log("locations: ", locations);
       return (
         <div>
           <h1>Locations</h1>
@@ -65,14 +84,7 @@ class Locations extends React.Component {
                 <u>Services</u>
               </Col>
             </Row>
-            {locations.map((location, index) => (
-              <Row key={index}>
-                <Col md={{ span: 3, offset: 2 }}>{location.name}</Col>
-                <Col md={{ span: 3 }}>{location.address}</Col>
-                <Col md={{ span: 2 }}>{location.services.primary_service}</Col>
-                {this.editButton(location)}
-              </Row>
-            ))}
+            {this.renderLocations(locations)}
           </Container>
         </div>
       );
