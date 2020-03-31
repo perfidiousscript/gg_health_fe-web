@@ -10,7 +10,7 @@ import {
 
 import fetch from "cross-fetch";
 
-const api_url = "http://localhost:3001";
+const api_url = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 async function getPracticesCall(token) {
   const response = await fetch(`${api_url}/practices`, {
