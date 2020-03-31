@@ -14,7 +14,12 @@ export default function locationsReducer(state = initialState, action) {
     case REQUEST_LOCATIONS:
       return { ...state, isFetching: true };
     case RECEIVE_LOCATIONS:
-      return { ...state, locations: action.locations, isFetching: false };
+      return {
+        ...state,
+        locations: action.locations,
+        responseStatus: action.responseStatus,
+        isFetching: false
+      };
     default:
       return state;
   }
