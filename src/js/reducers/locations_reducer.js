@@ -5,7 +5,7 @@ import {
 } from "../constants/action_types";
 
 const initialState = {
-  locations: [],
+  locations: {},
   isFetching: false
 };
 
