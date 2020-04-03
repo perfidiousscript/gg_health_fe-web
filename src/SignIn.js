@@ -24,7 +24,7 @@ class SignIn extends React.Component {
         <div>
           <h4>Sign In</h4>
           <Formik
-            initialValues={{ firstName: "", emailAddress: "" }}
+            initialValues={{ password: "", emailAddress: "" }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 dispatch(authenticateUser(values));
