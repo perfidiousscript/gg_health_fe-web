@@ -45,12 +45,12 @@ class Locations extends React.Component {
 
   renderLocations(locations) {
     let constructedLocations = [];
+    let superIndex = 1;
     for (const group in locations) {
-      let index = 1;
-      locations[group].map((location, index) => {
-        index++;
+      locations[group].map(location => {
+        superIndex++;
         constructedLocations.push(
-          <Row key={index}>
+          <Row key={superIndex}>
             <Col md={{ span: 3, offset: 2 }}>{location.name}</Col>
             <Col md={{ span: 3 }}>{location.address}</Col>
             <Col md={{ span: 2 }}>{location.services.primary_service}</Col>
@@ -68,7 +68,6 @@ class Locations extends React.Component {
     if (!isFetching & locations) {
       return <p>"Loading..."</p>;
     } else {
-      console.log("locations: ", locations);
       return (
         <div>
           <h1>Locations</h1>
