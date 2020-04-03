@@ -33,10 +33,10 @@ class SignIn extends React.Component {
           >
             {({ isSubmitting, isFetching, responseStatus, user }) => (
               <Form>
-                <label for="emailAddress">Email Address</label>
+                <label htmlFor="emailAddress">Email Address</label>
                 <br />
                 <Field type="text" name="emailAddress" /> <br />
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <br />
                 <Field type="text" name="password" /> <br />
                 <br />
