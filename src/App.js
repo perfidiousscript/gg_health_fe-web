@@ -14,6 +14,7 @@ import Home from "./Home.js";
 import SignUp from "./SignUp.js";
 import Locations from "./Components/LocationComponents/Locations.js";
 import EditLocation from "./Components/LocationComponents/EditLocation.js";
+import Constellation from "./Components/LocationComponents/Constellation.js";
 import Practices from "./Components/PracticesComponents/Practices.js";
 import EditPractice from "./Components/PracticesComponents/EditPractice.js";
 import AddPractice from "./Components/PracticesComponents/AddPractice.js";
@@ -114,6 +115,11 @@ class App extends React.Component {
               <PrivateRoute
                 path="/edit-location"
                 component={EditLocation}
+                user={user}
+              />
+              <PrivateRoute
+                path="/constellation"
+                component={Constellation}
                 user={user}
               />
               <PrivateRoute
