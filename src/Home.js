@@ -15,10 +15,30 @@ class Home extends React.Component {
           >
             View Your Dashboard
           </Link>
+          <br />
+          <Link
+            to={{
+              pathname: "/constellation"
+            }}
+          >
+            View Locations!
+          </Link>
         </div>
       );
     } else if (isAuthenticated) {
-      return <div>Logged in!</div>;
+      return (
+        <div>
+          <div>Logged in!</div>
+          <br />
+          <Link
+            to={{
+              pathname: "/constellation"
+            }}
+          >
+            View Locations!
+          </Link>
+        </div>
+      );
     } else {
       return (
         <div>
