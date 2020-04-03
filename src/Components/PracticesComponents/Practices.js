@@ -13,9 +13,9 @@ class Practices extends React.Component {
   contactList(contacts) {
     let practiceContacts = [];
 
-    contacts.map(contact =>
+    contacts.map((contact, index) =>
       practiceContacts.push(
-        <p>
+        <p key={index}>
           {contact.type}: {contact.value}
         </p>
       )
