@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { Container, Col, Row, Button } from "react-bootstrap";
+import drawConstellations from "../../js/d3/constellation_script.js";
 
 class Constellation extends React.Component {
   constructor(props) {
@@ -9,7 +7,7 @@ class Constellation extends React.Component {
 
     this.state = { locations: this.props.location.state.locations };
   }
-  drawShapes(locations) {}
+
   render() {
     const { locations } = this.state;
 
@@ -28,7 +26,7 @@ class Constellation extends React.Component {
             borderRadius: "50%"
           }}
         ></svg>
-        {this.drawShapes(locations)}
+        {drawConstellations(locations)}
       </div>
     );
   }
