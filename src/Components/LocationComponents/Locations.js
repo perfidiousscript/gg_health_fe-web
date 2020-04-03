@@ -62,8 +62,8 @@ class Locations extends React.Component {
     return constructedLocations;
   }
 
-  renderHelper() {
-    const { locations, isFetching } = this.props;
+  renderHelper(locations) {
+    const { isFetching } = this.props;
 
     if (!isFetching & locations) {
       return <p>"Loading..."</p>;
@@ -91,7 +91,21 @@ class Locations extends React.Component {
   }
 
   render() {
-    return <div>{this.renderHelper()}</div>;
+    const { locations } = this.props;
+    return (
+      <div>
+        <Link
+          to={{
+            pathname: "/constellation",
+            state: { locations: locations }
+          }}
+        >
+          View Constellation!
+        </Link>
+        <br />
+        {this.renderHelper(locations)}
+      </div>
+    );
   }
 }
 
