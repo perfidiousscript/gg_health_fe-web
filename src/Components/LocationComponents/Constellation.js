@@ -14,11 +14,13 @@ class Constellation extends React.Component {
 
   render() {
     const { locations } = this.state;
+
     return (
       <div>
         <h4>Constellation Here!</h4>
-        <svg style={{ height: 300, width: 300 }}>
-          <g />
+
+        <svg style={{ width: "700", height: "700" }}>
+          <g transform="translate(20, 10)" />
         </svg>
       </div>
     );
