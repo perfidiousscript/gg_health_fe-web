@@ -8,25 +8,18 @@ class Constellation extends React.Component {
     this.state = { locations: this.props.location.state.locations };
   }
 
+  componentDidMount() {
+    drawConstellations();
+  }
+
   render() {
     const { locations } = this.state;
-
     return (
       <div>
         <h4>Constellation Here!</h4>
-        <svg
-          className="line-container"
-          xmlns="http://www.w3.org/2000/svg"
-          width="600" //{this.props.width}
-          height="600" //{this.props.height}
-          style={{
-            backgroundColor: "indigo",
-            borderWidth: "thin",
-            borderColor: "yellow",
-            borderRadius: "50%"
-          }}
-        ></svg>
-        {drawConstellations(locations)}
+        <svg style={{ height: 300, width: 300 }}>
+          <g />
+        </svg>
       </div>
     );
   }
