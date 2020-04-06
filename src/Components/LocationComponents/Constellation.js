@@ -9,19 +9,15 @@ class Constellation extends React.Component {
   }
 
   componentDidMount() {
-    drawConstellations();
+    const { locations } = this.state;
+    drawConstellations(locations);
   }
 
   render() {
-    const { locations } = this.state;
-
     return (
       <div>
         <h4>Constellation Here!</h4>
-
-        <svg style={{ width: "700", height: "700" }}>
-          <g transform="translate(20, 10)" />
-        </svg>
+        <d3body />
       </div>
     );
   }
