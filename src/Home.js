@@ -18,7 +18,7 @@ class Home extends React.Component {
           <br />
           <Link
             to={{
-              pathname: "/constellation"
+              pathname: "/locations"
             }}
           >
             View Locations!
