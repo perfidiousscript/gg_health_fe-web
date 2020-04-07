@@ -24,7 +24,7 @@ import ManagerDash from "./ManagerDash.js";
 import { getUserProfile, logOutUser } from "./js/actions/user_actions.js";
 
 const PrivateRoute = ({ user, component, ...options }) => {
-  const finalComponent = user ? component : SignIn;
+  const finalComponent = user.role ? component : SignIn;
 
   return <Route {...options} component={finalComponent} />;
 };
