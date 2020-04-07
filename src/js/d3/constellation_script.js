@@ -28,26 +28,29 @@ export default function drawConstellations(locations) {
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 1.2 + ")");
 
-  let modalityArray = [];
-
-  function generateModalityArray(locations) {
-    var initialArray = Object.keys(locations);
-    var interval = 180 / (initialArray.length - 1);
-    initialArray.map((entry, index) => {
-      let capitalizedEntry = entry.charAt(0).toUpperCase() + entry.slice(1);
-      let degree = index * interval + 180;
-      modalityArray.push([capitalizedEntry, degree]);
-    });
-  }
-
   function degreesToRadians(degrees) {
     var pi = Math.PI;
     return degrees * (pi / 180);
   }
 
-  generateModalityArray(locations);
+  let modalityArray = [];
 
-  console.log("modalityArray: ", modalityArray);
+  function generateArray(locations) {
+    var initialArray = Object.keys(locations);
+    var interval = 180 / (initialArray.length - 1);
+    initialArray.map((entry, index) => {
+      var modalityObject = locations[entry];
+      var degree = index * interval + 180;
+      modalityObject["capitalizedEntry"] =
+        entry.charAt(0).toUpperCase() + entry.slice(1);
+      modalityObject["degree"] = degree;
+      modalityObject["xVal"] = 0.6 * Math.cos(degreesToRadians(degree)) - 0.1;
+      modalityObject["yVal"] = 1.1 * Math.sin(degreesToRadians(degree));
+      modalityArray.push(modalityObject);
+    });
+  }
+
+  generateArray(locations);
 
   var circle = d3
     .select("g")
@@ -69,14 +72,14 @@ export default function drawConstellations(locations) {
     .append("stop")
     .attr("class", "start")
     .attr("offset", "0%")
-    .attr("stop-color", "purple")
+    .attr("stop-color", "blue")
     .attr("stop-opacity", 1);
 
   gradient
     .append("stop")
     .attr("class", "end")
     .attr("offset", "100%")
-    .attr("stop-color", "blue")
+    .attr("stop-color", "purple")
     .attr("stop-opacity", 1);
 
   var text = d3
@@ -88,13 +91,13 @@ export default function drawConstellations(locations) {
 
   var textLabels = text
     .attr("x", function(d) {
-      return xScale(0.6 * Math.cos(degreesToRadians(d[1])) - 0.1);
+      return xScale(d.xVal);
     })
     .attr("y", function(d) {
-      return yScale(1.1 * Math.sin(degreesToRadians(d[1])));
+      return yScale(d.yVal);
     })
     .text(function(d) {
-      return `${d[0]}`;
+      return `${d.capitalizedEntry}`;
     })
     .attr("font-family", "serif")
     .attr("font-size", "20px")
