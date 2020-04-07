@@ -46,8 +46,9 @@ class Locations extends React.Component {
   renderLocations(locations) {
     let constructedLocations = [];
     let superIndex = 1;
+
     for (const group in locations) {
-      locations[group].map(location => {
+      locations[group]["locations"].map(location => {
         superIndex++;
         constructedLocations.push(
           <Row key={superIndex}>
