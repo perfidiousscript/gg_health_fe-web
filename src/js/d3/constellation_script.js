@@ -1,9 +1,9 @@
 import * as d3 from "d3";
 
 export default function drawConstellations(locations) {
-  var width = 960,
-    height = 500,
-    radius = Math.min(width, height) / 2 - 30;
+  var width = 1260,
+    height = 615,
+    radius = Math.min(width, height) * 0.8;
 
   var xScale = d3
     .scaleLinear()
@@ -21,7 +21,7 @@ export default function drawConstellations(locations) {
     .range([0, radius]);
 
   var svg = d3
-    .select("d3Body")
+    .select("#d3Body")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -50,7 +50,7 @@ export default function drawConstellations(locations) {
       modalityObject["capitalizedEntry"] =
         entry.charAt(0).toUpperCase() + entry.slice(1);
       modalityObject["degree"] = degree;
-      modalityObject["xVal"] = 0.6 * Math.cos(degreesToRadians(degree)) - 0.1;
+      modalityObject["xVal"] = 0.5 * Math.cos(degreesToRadians(degree)) - 0.1;
       modalityObject["yVal"] = 1.1 * Math.sin(degreesToRadians(degree));
       modalityArray.push(modalityObject);
     });
@@ -62,7 +62,7 @@ export default function drawConstellations(locations) {
     .select("g")
     .append("circle")
     .attr("fill", "url(#svgGradient)")
-    .attr("r", 400);
+    .attr("r", radius);
 
   var defs = svg.append("defs");
 
