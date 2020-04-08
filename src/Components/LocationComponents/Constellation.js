@@ -17,7 +17,7 @@ class Constellation extends React.Component {
     return (
       <div>
         <h4>Constellation Here!</h4>
-        <d3body />
+        <div id="d3Body" style={{ display: "inline-block" }} />
       </div>
     );
   }
