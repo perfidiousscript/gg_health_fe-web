@@ -35,6 +35,13 @@ export default function drawConstellations(locations) {
     return degrees * (pi / 180);
   }
 
+  function handleMouseOver(d) {
+    console.log("mouse out. d: ", d);
+  }
+  function handleMouseOut(d) {
+    console.log("mouse out");
+  }
+
   function positionRandomizer(parentPosition) {
     var num = Math.floor(Math.random() * 35 + 20) + 1;
     num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
@@ -134,15 +141,13 @@ export default function drawConstellations(locations) {
     .enter()
     .append("path")
     .attr("transform", function() {
-      return (
-        "translate(" +
-        positionRandomizer(xScale(this.parentNode.__data__.xVal)) +
-        ", " +
-        positionRandomizer(yScale(this.parentNode.__data__.yVal)) +
-        ")"
-      );
+      let xPos = positionRandomizer(xScale(this.parentNode.__data__.xVal));
+      let yPos = positionRandomizer(yScale(this.parentNode.__data__.yVal));
+      return "translate(" + xPos + ", " + yPos + ")";
     })
     .attr("d", pathData)
     .style("fill", "white")
-    .style("stroke", "yellow");
+    .style("stroke", "yellow")
+    .on("mouseover", handleMouseOver)
+    .on("mouseout", handleMouseOut);
 }
