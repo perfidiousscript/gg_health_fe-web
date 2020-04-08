@@ -133,12 +133,12 @@ export default function drawConstellations(locations) {
     })
     .enter()
     .append("path")
-    .attr("transform", function(d) {
+    .attr("transform", function() {
       return (
         "translate(" +
         positionRandomizer(xScale(this.parentNode.__data__.xVal)) +
         ", " +
-        positionRandomizer(xScale(this.parentNode.__data__.yVal)) +
+        positionRandomizer(yScale(this.parentNode.__data__.yVal)) +
         ")"
       );
     })
