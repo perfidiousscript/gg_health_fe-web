@@ -28,12 +28,18 @@ export default function drawConstellations(locations) {
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 1.2 + ")");
 
+  let modalityArray = [];
+
   function degreesToRadians(degrees) {
     var pi = Math.PI;
     return degrees * (pi / 180);
   }
 
-  let modalityArray = [];
+  function positionRandomizer(parentPosition) {
+    var num = Math.floor(Math.random() * 35 + 20) + 1;
+    num *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+    return parentPosition + num;
+  }
 
   function generateArray(locations) {
     var initialArray = Object.keys(locations);
@@ -60,6 +66,13 @@ export default function drawConstellations(locations) {
 
   var defs = svg.append("defs");
 
+  var symbolGenerator = d3
+    .symbol()
+    .type(d3.symbolStar)
+    .size(80);
+
+  var pathData = symbolGenerator();
+
   var gradient = defs
     .append("linearGradient")
     .attr("id", "svgGradient")
@@ -82,14 +95,22 @@ export default function drawConstellations(locations) {
     .attr("stop-color", "purple")
     .attr("stop-opacity", 1);
 
-  var text = d3
+  var layer1 = d3
+    .select("g")
+    .selectAll("g.layer1")
+    .data(modalityArray)
+    .enter()
+    .append("g")
+    .classed("layer1", true);
+
+  var modality = d3
     .select("g")
     .selectAll("text")
     .data(modalityArray)
     .enter()
     .append("text");
 
-  var textLabels = text
+  var textLabels = modality
     .attr("x", function(d) {
       return xScale(d.xVal);
     })
@@ -102,4 +123,26 @@ export default function drawConstellations(locations) {
     .attr("font-family", "serif")
     .attr("font-size", "20px")
     .attr("fill", "yellow");
+
+  var locationStars = d3
+    .selectAll("g.layer1")
+    .data(modalityArray)
+    .selectAll("path")
+    .data(function(d) {
+      return d.locations;
+    })
+    .enter()
+    .append("path")
+    .attr("transform", function(d) {
+      return (
+        "translate(" +
+        positionRandomizer(xScale(this.parentNode.__data__.xVal)) +
+        ", " +
+        positionRandomizer(xScale(this.parentNode.__data__.yVal)) +
+        ")"
+      );
+    })
+    .attr("d", pathData)
+    .style("fill", "white")
+    .style("stroke", "yellow");
 }
