@@ -130,14 +130,14 @@ class Constellation extends React.Component {
       .append("stop")
       .attr("class", "start")
       .attr("offset", "0%")
-      .attr("stop-color", "blue")
+      .attr("stop-color", "indigo")
       .attr("stop-opacity", 1);
 
     gradient
       .append("stop")
       .attr("class", "end")
       .attr("offset", "100%")
-      .attr("stop-color", "purple")
+      .attr("stop-color", "black")
       .attr("stop-opacity", 1);
 
     var layer1 = d3
