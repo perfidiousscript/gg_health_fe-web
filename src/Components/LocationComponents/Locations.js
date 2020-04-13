@@ -53,7 +53,14 @@ class Locations extends React.Component {
         constructedLocations.push(
           <Row key={superIndex}>
             <Col md={{ span: 3, offset: 2 }}>
-              <Link to="/location">{location.name}</Link>
+              <Link
+                to={{
+                  pathname: "/location",
+                  state: { location: location }
+                }}
+              >
+                {location.name}
+              </Link>
             </Col>
             <Col md={{ span: 3 }}>{location.address}</Col>
             <Col md={{ span: 2 }}>{location.services.primary_service}</Col>
