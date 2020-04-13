@@ -9,7 +9,7 @@ class Constellation extends React.Component {
     this.state = { locations: this.props.location.state.locations };
   }
 
-  drawConstellations(locations) {
+  drawConstellations(locations, superContext) {
     var width = 1260,
       height = 615,
       radius = Math.min(width, height) * 0.8;
@@ -78,6 +78,13 @@ class Constellation extends React.Component {
       svg
         .selectAll("#t" + positionArray[0] + "-" + positionArray[1] + "-" + i)
         .remove();
+    }
+
+    function handleStarClick(location) {
+      superContext.props.history.push({
+        pathname: "/location",
+        state: { location: location }
+      });
     }
 
     function positionRandomizer(parentPosition) {
@@ -187,12 +194,15 @@ class Constellation extends React.Component {
       .style("fill", "white")
       .style("stroke", "yellow")
       .on("mouseover", handleMouseOver)
-      .on("mouseout", handleMouseOut);
+      .on("mouseout", handleMouseOut)
+      .on("click", function(d) {
+        handleStarClick(d);
+      });
   }
 
   componentDidMount() {
     const { locations } = this.state;
-    this.drawConstellations(locations);
+    this.drawConstellations(locations, this);
   }
 
   render() {
