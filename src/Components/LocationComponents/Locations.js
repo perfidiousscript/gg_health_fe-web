@@ -52,7 +52,9 @@ class Locations extends React.Component {
         superIndex++;
         constructedLocations.push(
           <Row key={superIndex}>
-            <Col md={{ span: 3, offset: 2 }}>{location.name}</Col>
+            <Col md={{ span: 3, offset: 2 }}>
+              <Link to="/location">{location.name}</Link>
+            </Col>
             <Col md={{ span: 3 }}>{location.address}</Col>
             <Col md={{ span: 2 }}>{location.services.primary_service}</Col>
             {this.editButton(location)}

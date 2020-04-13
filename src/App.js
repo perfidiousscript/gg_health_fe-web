@@ -13,6 +13,7 @@ import { Button } from "react-bootstrap";
 import Home from "./Home.js";
 import SignUp from "./SignUp.js";
 import Locations from "./Components/LocationComponents/Locations.js";
+import Location from "./Components/LocationComponents/Location.js";
 import EditLocation from "./Components/LocationComponents/EditLocation.js";
 import Constellation from "./Components/LocationComponents/Constellation.js";
 import Practices from "./Components/PracticesComponents/Practices.js";
@@ -127,6 +128,7 @@ class App extends React.Component {
                 component={Locations}
                 user={user}
               />
+              <PrivateRoute path="/location" component={Location} user={user} />
             </Switch>
           </div>
         </Router>
