@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-export default function drawConstellations(locations) {
+export default function drawConstellations(locations, superContext) {
   var width = 1260,
     height = 615,
     radius = Math.min(width, height) * 0.8;
@@ -35,11 +35,47 @@ export default function drawConstellations(locations) {
     return degrees * (pi / 180);
   }
 
-  function handleMouseOver(d) {
-    console.log("mouse out. d: ", d);
+  function getXYFromTranslate(element) {
+    var trans_string = d3
+      .select(element)
+      .attr("transform")
+      .split(" ");
+    var x = ~~trans_string[0].split("(")[1].split(",")[0];
+    var y = ~~trans_string[1].split(")")[0];
+    return [x, y];
   }
-  function handleMouseOut(d) {
-    console.log("mouse out");
+
+  function handleMouseOver(d, i) {
+    let positionArray = getXYFromTranslate(this);
+
+    d3.select(this).attr("fill", "orange");
+
+    d3.selectAll("g.layer1")
+      .append("text")
+      .attr("id", "t" + positionArray[0] + "-" + positionArray[1] + "-" + i)
+      .attr("x", positionArray[0] - 30)
+      .attr("y", positionArray[1] - 15)
+      .attr("font-family", "serif")
+      .attr("font-size", "20px")
+      .attr("fill", "white")
+      .text(function() {
+        return `${d["name"]}`; // Value of the text
+      });
+  }
+
+  function handleMouseOut(d, i) {
+    let positionArray = getXYFromTranslate(this);
+
+    svg
+      .selectAll("#t" + positionArray[0] + "-" + positionArray[1] + "-" + i)
+      .remove();
+  }
+
+  function handleStarClick(location) {
+    superContext.props.history.push({
+      pathname: "/location",
+      state: { location: location }
+    });
   }
 
   function positionRandomizer(parentPosition) {
@@ -92,14 +128,14 @@ export default function drawConstellations(locations) {
     .append("stop")
     .attr("class", "start")
     .attr("offset", "0%")
-    .attr("stop-color", "blue")
+    .attr("stop-color", "indigo")
     .attr("stop-opacity", 1);
 
   gradient
     .append("stop")
     .attr("class", "end")
     .attr("offset", "100%")
-    .attr("stop-color", "purple")
+    .attr("stop-color", "black")
     .attr("stop-opacity", 1);
 
   var layer1 = d3
@@ -149,5 +185,8 @@ export default function drawConstellations(locations) {
     .style("fill", "white")
     .style("stroke", "yellow")
     .on("mouseover", handleMouseOver)
-    .on("mouseout", handleMouseOut);
+    .on("mouseout", handleMouseOut)
+    .on("click", function(d) {
+      handleStarClick(d);
+    });
 }
