@@ -47,7 +47,7 @@ class Location extends React.Component {
         <h4>{location.name}</h4>
         <p> Primary Service: {location.services.primary_service}</p>
         <p> Phone Number: {location.phone_number}</p>
-        <Modal show={show} onHide={this.handleClose}>
+        <Modal show={show} onHide={this.handleClose} centered>
           <LocationModal
             handleClose={this.handleClose}
             dateObject={dateObject}
