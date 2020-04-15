@@ -11,33 +11,36 @@ class Location extends React.Component {
 
     this.state = {
       location: this.props.location.state.location,
-      show: false
+      show: false,
+      dateObject: {},
+      sampleDateHash: { 8: "Opening", 15: "Opening" }
     };
   }
 
-  onClick = date => {
-    let parsedDate = Date(date);
-    let dateObject = {};
-    dateObject.year = date.getFullYear();
-    dateObject.month = date.getMonth();
-    dateObject.date = date.getDate();
-    console.log("dateObject: ", dateObject);
-  };
-
   tileContents = ({ activeStartDate, date, view }) => {
-    let sampleDateHash = { 8: "Opening", 15: "Opening" };
+    let { sampleDateHash } = this.state;
     return <p>{sampleDateHash[date.getDate()]}</p>;
   };
 
   handleClose = () => {
     this.setState({ show: false });
   };
-  handleShow = () => {
-    this.setState({ show: true });
+  handleShow = date => {
+    const { location, show, sampleDateHash } = this.state;
+    let parsedDate = Date(date);
+    let dateObject = {};
+
+    dateObject.parsedDate = parsedDate;
+    dateObject.year = date.getFullYear();
+    dateObject.month = date.getMonth();
+    dateObject.date = date.getDate();
+    dateObject.contents = sampleDateHash[dateObject.date];
+
+    this.setState({ show: true, dateObject: dateObject });
   };
 
   render() {
-    const { location, show } = this.state;
+    const { location, show, dateObject } = this.state;
 
     return (
       <div>
@@ -45,14 +48,16 @@ class Location extends React.Component {
         <p> Primary Service: {location.services.primary_service}</p>
         <p> Phone Number: {location.phone_number}</p>
         <Modal show={show} onHide={this.handleClose}>
-          <LocationModal handleClose={this.handleClose} />
+          <LocationModal
+            handleClose={this.handleClose}
+            dateObject={dateObject}
+            location={location}
+          />
         </Modal>
         <Calendar
           calendarType="US"
           onClickDay={this.handleShow}
-          value={this.state.date}
           tileContent={this.tileContents}
-          // tileContent={this.generateContent()}
         />
       </div>
     );

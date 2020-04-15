@@ -2,19 +2,22 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
 class LocationModal extends React.Component {
-  constructor(props) {
-    super(props);
-
-    // this.handleClose = this.handleClose.bind(this);
-  }
   render() {
-    const { handleClose } = this.props;
+    const { handleClose, dateObject, location } = this.props;
+
+    let dateArray = dateObject.parsedDate.split(" ");
+
     return (
       <>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>{location.name}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <h4>{`${dateArray[0]}, ${dateArray[1]} ${dateArray[2]} ${
+            dateArray[3]
+          }`}</h4>
+          <p>{dateObject.contents}</p>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
