@@ -19,6 +19,11 @@ class Location extends React.Component {
     console.log("dateObject: ", dateObject);
   };
 
+  tileContents = ({ activeStartDate, date, view }) => {
+    let sampleDateHash = { 8: "Opening", 15: "Opening" };
+    return <p>{sampleDateHash[date.getDate()]}</p>;
+  };
+
   render() {
     const { location } = this.state;
 
@@ -31,6 +36,7 @@ class Location extends React.Component {
           calendarType="US"
           onClickDay={this.onClick}
           value={this.state.date}
+          tileContent={this.tileContents}
           // tileContent={this.generateContent()}
         />
       </div>
