@@ -25,6 +25,7 @@ class Location extends React.Component {
   handleClose = () => {
     this.setState({ show: false });
   };
+
   handleShow = date => {
     const { location, show, sampleDateHash } = this.state;
     let parsedDate = Date(date);
