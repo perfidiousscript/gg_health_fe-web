@@ -71,3 +71,8 @@ export function fetchLocations(type, practiceId) {
       });
   };
 }
+
+//TODO: Finish out editLocation action
+export function editLocation(location) {
+  console.log("location: ", location);
+}
