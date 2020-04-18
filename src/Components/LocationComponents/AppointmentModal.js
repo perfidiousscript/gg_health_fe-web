@@ -1,8 +1,20 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Col, Row, Modal, Button } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 
 class AppointmentModal extends React.Component {
+  timeOptions() {
+    let optionArray = [];
+    for (var i = 0; i <= 12; i++) {
+      optionArray.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+
+    return optionArray;
+  }
   render() {
     const { handleClose, dates } = this.props;
     return (
@@ -12,11 +24,17 @@ class AppointmentModal extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <Formik
-            initialValues={{ start: dates.start, end: dates.end }}
+            initialValues={{ dates: dates }}
             onSubmit={values => {
               // dispatch(editLocation(values));
             }}
-          ></Formik>
+          >
+            {({ isFetching, responseStatus }) => (
+              <Form>
+                <select id="startTime">{this.timeOptions()}</select>
+              </Form>
+            )}
+          </Formik>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

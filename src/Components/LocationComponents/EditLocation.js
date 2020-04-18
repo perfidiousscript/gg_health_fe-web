@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import AppointmentModal from "./AppointmentModal.js";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { Container, Col, Row, Button, Modal } from "react-bootstrap";
+import { Col, Row, Button, Modal } from "react-bootstrap";
 import "react-calendar/dist/Calendar.css";
 import { editLocation } from "../../js/actions/location_actions.js";
 import "./Location.css";
