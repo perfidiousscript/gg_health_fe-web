@@ -3,9 +3,9 @@ import { Col, Row, Modal, Button } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 
 class AppointmentModal extends React.Component {
-  timeOptions() {
+  hourOptions() {
     let optionArray = [];
-    for (var i = 0; i <= 12; i++) {
+    for (var i = 1; i <= 12; i++) {
       optionArray.push(
         <option key={i} value={i}>
           {i}
@@ -15,6 +15,27 @@ class AppointmentModal extends React.Component {
 
     return optionArray;
   }
+
+  showDates(dates) {
+    let datesHtml = [];
+    if (dates.start) {
+      datesHtml.push(
+        <p>
+          Create appointment for {dates.start.getMonth()}/
+          {dates.start.getDate()} to {dates.end.getMonth()}/
+          {dates.end.getDate()}
+        </p>
+      );
+    } else {
+      datesHtml.push(
+        <p>
+          Create appointment for {dates.date.getMonth()}/{dates.date.getDate()}{" "}
+        </p>
+      );
+    }
+    return datesHtml;
+  }
+
   render() {
     const { handleClose, dates } = this.props;
     return (
@@ -26,12 +47,14 @@ class AppointmentModal extends React.Component {
           <Formik
             initialValues={{ dates: dates }}
             onSubmit={values => {
-              // dispatch(editLocation(values));
+              // dispatch(addAppointment(values));
             }}
           >
             {({ isFetching, responseStatus }) => (
               <Form>
-                <select id="startTime">{this.timeOptions()}</select>
+                {this.showDates(dates)}
+                <label name="startTime">Start Time: </label>
+                <select id="startTime">{this.hourOptions()}</select>
               </Form>
             )}
           </Formik>
