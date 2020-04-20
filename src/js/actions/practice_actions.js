@@ -38,7 +38,7 @@ async function createPracticeCall(practiceValues, token) {
 
 async function editPracticeCall(practiceValues, token) {
   let callJson = JSON.stringify(practiceValues);
-  console.log("callJson: ", callJson);
+
   const response = await fetch(`${api_url}/practices/${practiceValues.id}`, {
     method: "PUT",
     headers: {

@@ -27,8 +27,6 @@ class Practices extends React.Component {
   renderHelper() {
     const { isFetching, practices } = this.props;
 
-    console.log("practices: ", practices);
-
     if (isFetching) {
       return <h3>Loading...</h3>;
     } else if (!practices) {
