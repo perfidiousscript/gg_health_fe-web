@@ -35,10 +35,17 @@ class EditLocation extends React.Component {
   handleSelect = newDate => {
     const { dates } = this.state;
     let newDateObject = {};
-    newDateObject.start = dates.end;
-    newDateObject.end = newDate;
-
-    console.log("newDateObject: ", newDateObject);
+    if (dates.date) {
+      if (dates.date <= newDate) {
+        newDateObject.start = dates.date;
+        newDateObject.end = newDate;
+      } else {
+        newDateObject.start = newDate;
+        newDateObject.end = dates.date;
+      }
+    } else {
+      newDateObject = { date: newDate };
+    }
 
     this.setState({ dates: newDateObject });
   };
