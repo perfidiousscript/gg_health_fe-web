@@ -16,6 +16,19 @@ class AppointmentModal extends React.Component {
     return optionArray;
   }
 
+  minuteOptions() {
+    let optionArray = [];
+    for (var i = 0; i <= 12; i++) {
+      optionArray.push(
+        <option key={i} value={i * 5}>
+          {i * 5}
+        </option>
+      );
+    }
+
+    return optionArray;
+  }
+
   showDates(dates) {
     let datesHtml = [];
     if (dates.start) {
@@ -37,7 +50,8 @@ class AppointmentModal extends React.Component {
   }
 
   render() {
-    const { handleClose, dates } = this.props;
+    const { handleClose, dates, services } = this.props;
+
     return (
       <>
         <Modal.Header closeButton>
@@ -54,12 +68,30 @@ class AppointmentModal extends React.Component {
               <Form>
                 {this.showDates(dates)}
                 <label name="startTime">Start Time: </label>
-                <select id="startTime">{this.hourOptions()}</select>
+                <br />
+                <select id="startTimeHour">{this.hourOptions()}</select>
+                <select id="startTimeMinutesr">{this.minuteOptions()}</select>
+                <select id="startTimeamPm">
+                  <option value="am">AM</option>
+                  <option value="pm">PM</option>
+                </select>
+                <br />
+                <label name="endTime">End Time: </label>
+                <br />
+                <select id="endTimeHour">{this.hourOptions()}</select>
+                <select id="endTimeMinutesr">{this.minuteOptions()}</select>
+                <select id="endTimeamPm">
+                  <option value="am">AM</option>
+                  <option value="pm">PM</option>
+                </select>
               </Form>
             )}
           </Formik>
         </Modal.Body>
         <Modal.Footer>
+          <Button variant="primary" onClick={this.onSubmit}>
+            Create Appointment
+          </Button>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
