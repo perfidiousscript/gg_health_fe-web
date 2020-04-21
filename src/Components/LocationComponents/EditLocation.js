@@ -67,7 +67,11 @@ class EditLocation extends React.Component {
       <div>
         <h4>Edit Location!</h4>
         <Modal show={show} onHide={this.handleClose} centered>
-          <AppointmentModal handleClose={this.handleClose} dates={dates} />
+          <AppointmentModal
+            handleClose={this.handleClose}
+            dates={dates}
+            services={location.services}
+          />
         </Modal>
         <Row>
           <Col md={{ span: 3, offset: 1 }}>
