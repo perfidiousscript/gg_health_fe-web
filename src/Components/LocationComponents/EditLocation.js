@@ -15,8 +15,6 @@ class EditLocation extends React.Component {
   constructor(props) {
     super(props);
 
-    let initialDateArray = [];
-
     this.state = {
       location: this.props.location.state.location,
       show: false,
@@ -31,24 +29,6 @@ class EditLocation extends React.Component {
       </Row>
     );
   }
-
-  handleSelect = newDate => {
-    const { dates } = this.state;
-    let newDateObject = {};
-    if (dates.date) {
-      if (dates.date <= newDate) {
-        newDateObject.start = dates.date;
-        newDateObject.end = newDate;
-      } else {
-        newDateObject.start = newDate;
-        newDateObject.end = dates.date;
-      }
-    } else {
-      newDateObject = { date: newDate };
-    }
-
-    this.setState({ dates: newDateObject });
-  };
 
   handleShow = () => {
     this.setState({ show: true });
@@ -69,7 +49,7 @@ class EditLocation extends React.Component {
         <Modal show={show} onHide={this.handleClose} centered>
           <AppointmentModal
             handleClose={this.handleClose}
-            dates={dates}
+            handleSelect={this.handleSelect}
             services={location.services}
           />
         </Modal>
@@ -123,11 +103,7 @@ class EditLocation extends React.Component {
             </Formik>
           </Col>
           <Col md={{ span: 8 }}>
-            <Calendar
-              calendarType="US"
-              selectRange
-              onClickDay={this.handleSelect}
-            />
+            <Calendar calendarType="US" />
           </Col>
         </Row>
         <Row>

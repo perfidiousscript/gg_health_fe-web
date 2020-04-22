@@ -4,6 +4,13 @@ import { Col, Row, Modal, Button } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 
 class AppointmentModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dates: {}
+    };
+  }
   hourOptions() {
     let optionArray = [];
     for (var i = 1; i <= 12; i++) {
@@ -40,22 +47,39 @@ class AppointmentModal extends React.Component {
           {dates.end.getDate()}
         </p>
       );
-    } else {
+    } else if (dates.date) {
       datesHtml.push(
         <p>
           Create appointment for {dates.date.getMonth()}/{dates.date.getDate()}{" "}
         </p>
       );
+    } else {
+      datesHtml.push(<p>No Dates Selected</p>);
     }
     return datesHtml;
   }
 
-  handleSelect(value) {
-    console.log("value: ", value);
-  }
+  handleSelect = newDate => {
+    const { dates } = this.state;
+    let newDateObject = {};
+    if (dates.date) {
+      if (dates.date <= newDate) {
+        newDateObject.start = dates.date;
+        newDateObject.end = newDate;
+      } else {
+        newDateObject.start = newDate;
+        newDateObject.end = dates.date;
+      }
+    } else {
+      newDateObject = { date: newDate };
+    }
+
+    this.setState({ dates: newDateObject });
+  };
 
   render() {
     const { handleClose, services } = this.props;
+    const { dates } = this.state;
 
     return (
       <>
@@ -63,6 +87,7 @@ class AppointmentModal extends React.Component {
           <Modal.Title>Appointment Modal!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p>{this.showDates(dates)}</p>
           <Calendar
             calendarType="US"
             selectRange
