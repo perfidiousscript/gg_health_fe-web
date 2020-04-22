@@ -1,4 +1,5 @@
 import React from "react";
+import Calendar from "react-calendar";
 import { Col, Row, Modal, Button } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 
@@ -49,8 +50,12 @@ class AppointmentModal extends React.Component {
     return datesHtml;
   }
 
+  handleSelect(value) {
+    console.log("value: ", value);
+  }
+
   render() {
-    const { handleClose, dates, services } = this.props;
+    const { handleClose, services } = this.props;
 
     return (
       <>
@@ -58,15 +63,18 @@ class AppointmentModal extends React.Component {
           <Modal.Title>Appointment Modal!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <Calendar
+            calendarType="US"
+            selectRange
+            onClickDay={this.handleSelect}
+          />
           <Formik
-            initialValues={{ dates: dates }}
             onSubmit={values => {
               // dispatch(addAppointment(values));
             }}
           >
             {({ isFetching, responseStatus }) => (
               <Form>
-                {this.showDates(dates)}
                 <label name="startTime">Start Time: </label>
                 <br />
                 <select id="startTimeHour">{this.hourOptions()}</select>
