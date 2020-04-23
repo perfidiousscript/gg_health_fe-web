@@ -9,7 +9,7 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col, Container } from "react-bootstrap";
 import Home from "./Home.js";
 import SignUp from "./SignUp.js";
 import Locations from "./Components/LocationComponents/Locations.js";
@@ -76,12 +76,30 @@ class App extends React.Component {
       return (
         <Router>
           <div className="App">
-            <header className="App-header">
-              <Link to="/">Gentle Guide</Link>
-              <AuthLink
-                isAuthenticated={isAuthenticated}
-                logOut={this.logOut}
-              />
+            <header
+              className="App-header"
+              style={{
+                padding: "2em 0em"
+              }}
+            >
+              <Container>
+                <Row>
+                  <Col md={{ offset: 4, span: 4 }}>
+                    <Link
+                      to="/"
+                      style={{ fontSize: "2em", color: "aliceblue" }}
+                    >
+                      Gentle Guide
+                    </Link>
+                  </Col>
+                  <Col md={{ offset: 2, span: 2 }}>
+                    <AuthLink
+                      isAuthenticated={isAuthenticated}
+                      logOut={this.logOut}
+                    />
+                  </Col>
+                </Row>
+              </Container>
             </header>
             <Switch>
               <Route exact path="/">
