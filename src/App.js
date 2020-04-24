@@ -79,27 +79,23 @@ class App extends React.Component {
             <header
               className="App-header"
               style={{
-                padding: "2em 0em"
+                padding: "1.2em 0em",
+                display: "block"
               }}
             >
-              <Container>
-                <Row>
-                  <Col md={{ offset: 4, span: 4 }}>
-                    <Link
-                      to="/"
-                      style={{ fontSize: "2em", color: "aliceblue" }}
-                    >
-                      Gentle Guide
-                    </Link>
-                  </Col>
-                  <Col md={{ offset: 2, span: 2 }}>
-                    <AuthLink
-                      isAuthenticated={isAuthenticated}
-                      logOut={this.logOut}
-                    />
-                  </Col>
-                </Row>
-              </Container>
+              <Row>
+                <Col md={{ offset: 4, span: 4 }}>
+                  <Link to="/" style={{ fontSize: "2em", color: "aliceblue" }}>
+                    Gentle Guide
+                  </Link>
+                </Col>
+                <Col md={{ offset: 2, span: 2 }} style={{ display: "flex" }}>
+                  <AuthLink
+                    isAuthenticated={isAuthenticated}
+                    logOut={this.logOut}
+                  />
+                </Col>
+              </Row>
             </header>
             <Switch>
               <Route exact path="/">

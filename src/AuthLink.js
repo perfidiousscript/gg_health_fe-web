@@ -3,6 +3,10 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class AuthLink extends React.Component {
+  logIn() {
+    this.props.history.push("/sign-in");
+  }
+
   render() {
     const { isAuthenticated, logOut } = this.props;
     return isAuthenticated ? (
@@ -10,9 +14,17 @@ class AuthLink extends React.Component {
         Sign Out
       </Button>
     ) : (
-      <Link to="/sign-in" style={{ color: "aliceblue" }}>
+      <Button
+        variant="link"
+        onClick={this.logIn}
+        style={{
+          color: "aliceblue",
+          borderLeft: "1px solid aliceblue",
+          borderRadius: 0
+        }}
+      >
         Sign In
-      </Link>
+      </Button>
     );
   }
 }
