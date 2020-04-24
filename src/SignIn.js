@@ -3,7 +3,6 @@ import Store from "./js/store/index.js";
 import { Formik, Form, Field } from "formik";
 import { connect } from "react-redux";
 import fetch from "cross-fetch";
-import { Button } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 
 import { authenticateUser } from "./js/actions/user_actions.js";
@@ -42,9 +41,9 @@ class SignIn extends React.Component {
                 <Field type="text" name="password" /> <br />
                 <br />
                 <p> </p>
-                <Button variant="secondary" disabled={isSubmitting}>
+                <button type="primary" disabled={isSubmitting}>
                   Submit
-                </Button>
+                </button>
               </Form>
             )}
           </Formik>

@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class AuthLink extends React.Component {
-  logIn() {
+  logInRedirect() {
     this.props.history.push("/sign-in");
   }
 
@@ -16,7 +16,7 @@ class AuthLink extends React.Component {
     ) : (
       <Button
         variant="link"
-        onClick={this.logIn}
+        onClick={this.logInRedirect}
         style={{
           color: "aliceblue",
           borderLeft: "1px solid aliceblue",
