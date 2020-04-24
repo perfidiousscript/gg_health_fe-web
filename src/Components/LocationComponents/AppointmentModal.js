@@ -45,20 +45,21 @@ class AppointmentModal extends React.Component {
     let datesHtml = [];
     if (dates.start) {
       datesHtml.push(
-        <p>
-          Create appointment for {dates.start.getMonth()}/
-          {dates.start.getDate()} to {dates.end.getMonth()}/
+        <p key="multi_date">
+          Create appointments each day from {dates.start.getMonth()}/
+          {dates.start.getDate()} through {dates.end.getMonth()}/
           {dates.end.getDate()}
         </p>
       );
     } else if (dates.date) {
       datesHtml.push(
-        <p>
-          Create appointment for {dates.date.getMonth()}/{dates.date.getDate()}{" "}
+        <p key="one_date">
+          Create an appointment on {dates.date.getMonth()}/
+          {dates.date.getDate()}{" "}
         </p>
       );
     } else {
-      datesHtml.push(<p>No Dates Selected</p>);
+      datesHtml.push(<p key="no_dates">No Dates Selected</p>);
     }
     return datesHtml;
   }
@@ -91,7 +92,7 @@ class AppointmentModal extends React.Component {
           <Modal.Title>Appointment Modal!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>{this.showDates(dates)}</p>
+          {this.showDates(dates)}
           <Calendar
             calendarType="US"
             selectRange
