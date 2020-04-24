@@ -53,6 +53,7 @@ class EditLocation extends React.Component {
             services={location.services}
           />
         </Modal>
+
         <Row>
           <Col md={{ span: 3, offset: 1 }}>
             <Formik
@@ -102,14 +103,22 @@ class EditLocation extends React.Component {
               )}
             </Formik>
           </Col>
-          <Col md={{ span: 8 }}>
+          <Col
+            md={{ span: 8 }}
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <Calendar calendarType="US" />
+            <Button
+              variant="link"
+              onClick={this.handleShow}
+              style={{ width: "67%", border: "1px solid gray", color: "black" }}
+            >
+              Add appointment
+            </Button>
           </Col>
         </Row>
         <Row>
-          <Col md={{ span: 4, offset: 4 }}>
-            <Button onClick={this.handleShow}>Add appointment</Button>
-          </Col>
+          <Col md={{ span: 4, offset: 4 }}></Col>
         </Row>
       </div>
     );
