@@ -27,9 +27,13 @@ class AppointmentModal extends React.Component {
   minuteOptions() {
     let optionArray = [];
     for (var i = 0; i <= 12; i++) {
+      let minutes = i * 5;
+      let padded_minutes = minutes => {
+        return minutes < 10 ? `0${minutes}` : `${minutes}`;
+      };
       optionArray.push(
-        <option key={i} value={i * 5}>
-          {i * 5}
+        <option key={i} value={minutes}>
+          {padded_minutes(minutes)}
         </option>
       );
     }
@@ -103,7 +107,7 @@ class AppointmentModal extends React.Component {
                 <label name="startTime">Start Time: </label>
                 <br />
                 <select id="startTimeHour">{this.hourOptions()}</select>
-                <select id="startTimeMinutesr">{this.minuteOptions()}</select>
+                <select id="startTimeMinutes">{this.minuteOptions()}</select>
                 <select id="startTimeamPm">
                   <option value="am">AM</option>
                   <option value="pm">PM</option>
@@ -112,7 +116,7 @@ class AppointmentModal extends React.Component {
                 <label name="endTime">End Time: </label>
                 <br />
                 <select id="endTimeHour">{this.hourOptions()}</select>
-                <select id="endTimeMinutesr">{this.minuteOptions()}</select>
+                <select id="endTimeMinutes">{this.minuteOptions()}</select>
                 <select id="endTimeamPm">
                   <option value="am">AM</option>
                   <option value="pm">PM</option>
