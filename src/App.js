@@ -2,13 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import logo from "./logo.svg";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Button, Row, Col, Container } from "react-bootstrap";
 import Home from "./Home.js";
 import SignUp from "./SignUp.js";
@@ -24,7 +18,7 @@ import AuthLink from "./AuthLink.js";
 import ManagerDash from "./ManagerDash.js";
 import { getUserProfile, logOutUser } from "./js/actions/user_actions.js";
 
-const PrivateRoute = ({ user, component, ...options }) => {
+const AuthenticatedRoute = ({ user, component, ...options }) => {
   const finalComponent = user.role ? component : SignIn;
 
   return <Route {...options} component={finalComponent} />;
@@ -46,10 +40,6 @@ const ManagerRoute = ({ user, component, ...options }) => {
 };
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { dispatch, isAuthenticated } = this.props;
 
@@ -61,10 +51,14 @@ class App extends React.Component {
   }
 
   logOut = () => {
-    const { dispatch, user } = this.props;
+    const { dispatch } = this.props;
     localStorage.setItem("auth_token", "");
     dispatch(logOutUser());
     this.props.history.push("/");
+  };
+
+  logIn = () => {
+    this.props.history.push("/sign-in");
   };
 
   render() {
@@ -93,6 +87,7 @@ class App extends React.Component {
                   <AuthLink
                     isAuthenticated={isAuthenticated}
                     logOut={this.logOut}
+                    logIn={this.logIn}
                   />
                 </Col>
               </Row>
@@ -127,22 +122,26 @@ class App extends React.Component {
                 component={AddPractice}
                 user={user}
               />
-              <PrivateRoute
+              <AuthenticatedRoute
                 path="/edit-location"
                 component={EditLocation}
                 user={user}
               />
-              <PrivateRoute
+              <AuthenticatedRoute
                 path="/constellation"
                 component={Constellation}
                 user={user}
               />
-              <PrivateRoute
+              <AuthenticatedRoute
                 path="/locations"
                 component={Locations}
                 user={user}
               />
-              <PrivateRoute path="/location" component={Location} user={user} />
+              <AuthenticatedRoute
+                path="/location"
+                component={Location}
+                user={user}
+              />
             </Switch>
           </div>
         </Router>

@@ -3,28 +3,38 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class AuthLink extends React.Component {
-  logInRedirect() {
-    this.props.history.push("/sign-in");
-  }
+  buttonHover = () => {
+    console.log("hovering!");
+  };
 
   render() {
-    const { isAuthenticated, logOut } = this.props;
-    return isAuthenticated ? (
-      <Button variant="link" onClick={logOut} style={{ color: "aliceblue" }}>
-        Sign Out
-      </Button>
-    ) : (
-      <Button
-        variant="link"
-        onClick={this.logInRedirect}
+    const { isAuthenticated, logOut, logIn } = this.props;
+
+    let link;
+    let linkText;
+
+    if (isAuthenticated) {
+      link = logOut;
+      linkText = "Sign Out";
+    } else {
+      link = logIn;
+      linkText = "Sign In";
+    }
+
+    return (
+      <div
+        onClick={link}
+        // onHover={this.buttonHover}
         style={{
           color: "aliceblue",
           borderLeft: "1px solid aliceblue",
-          borderRadius: 0
+          borderRadius: 0,
+          width: "100%",
+          padding: "7% 0 0 0"
         }}
       >
-        Sign In
-      </Button>
+        {linkText}
+      </div>
     );
   }
 }

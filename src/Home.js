@@ -51,6 +51,7 @@ class Home extends React.Component {
 
   render() {
     const { isAuthenticated, user } = this.props;
+
     return this.authRender(isAuthenticated, user);
   }
 }
