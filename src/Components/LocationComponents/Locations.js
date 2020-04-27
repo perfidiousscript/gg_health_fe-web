@@ -75,7 +75,7 @@ class Locations extends React.Component {
   renderHelper(locations) {
     const { isFetching } = this.props;
 
-    if (!isFetching & locations) {
+    if (isFetching & (Object.keys(locations) == 0)) {
       return <p>"Loading..."</p>;
     } else {
       return (
@@ -125,9 +125,9 @@ class Locations extends React.Component {
 // };
 
 function mapStateToProps(state) {
-  const { locations } = state.locations;
+  const { locations, isFetching } = state.locations;
 
-  return { locations };
+  return { locations, isFetching };
 }
 
 export default connect(mapStateToProps)(Locations);
