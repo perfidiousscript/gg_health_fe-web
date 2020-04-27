@@ -8,10 +8,6 @@ import { Link, Redirect } from "react-router-dom";
 import { authenticateUser } from "./js/actions/user_actions.js";
 
 class SignIn extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { dispatch, isFetching, user, error, isAuthenticated } = this.props;
 
