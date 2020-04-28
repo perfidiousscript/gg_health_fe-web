@@ -1,7 +1,9 @@
 import {
   ADD_LOCATION,
   REQUEST_LOCATIONS,
-  RECEIVE_LOCATIONS
+  RECEIVE_LOCATIONS,
+  SENDING_APPOINTMENT,
+  SENT_APPOINTMENT
 } from "../constants/action_types";
 
 import fetch from "cross-fetch";
@@ -71,6 +73,8 @@ export function fetchLocations(type, practiceId) {
       });
   };
 }
+
+export function addAppointment(appointment, locationId) {}
 
 //TODO: Finish out editLocation action
 export function editLocation(location) {
