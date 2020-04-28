@@ -12,7 +12,8 @@ class AppointmentModal extends React.Component {
       dates: {}
     };
   }
-  hourOptions() {
+
+  hourOptions = () => {
     let optionArray = [];
     for (var i = 1; i <= 12; i++) {
       optionArray.push(
@@ -23,9 +24,9 @@ class AppointmentModal extends React.Component {
     }
 
     return optionArray;
-  }
+  };
 
-  minuteOptions() {
+  minuteOptions = () => {
     let optionArray = [];
     for (var i = 0; i <= 12; i++) {
       let minutes = i * 5;
@@ -40,9 +41,9 @@ class AppointmentModal extends React.Component {
     }
 
     return optionArray;
-  }
+  };
 
-  showDates(dates) {
+  showDates = dates => {
     let datesHtml = [];
     if (dates.start) {
       datesHtml.push(
@@ -63,7 +64,7 @@ class AppointmentModal extends React.Component {
       datesHtml.push(<p key="no_dates">No Dates Selected</p>);
     }
     return datesHtml;
-  }
+  };
 
   handleSelect = newDate => {
     const { dates } = this.state;
@@ -81,6 +82,21 @@ class AppointmentModal extends React.Component {
     }
 
     this.setState({ dates: newDateObject });
+  };
+
+  serviceOptions = services => {
+    console.log("services: ", services);
+    let servicesHtml = [];
+
+    services.services_list.map(function(service, index) {
+      servicesHtml.push(
+        <option key={index} value={service}>
+          {service}
+        </option>
+      );
+    });
+
+    return servicesHtml;
   };
 
   render() {
@@ -106,23 +122,44 @@ class AppointmentModal extends React.Component {
           >
             {({ isFetching, responseStatus }) => (
               <Form>
-                <label name="startTime">Start Time: </label>
-                <br />
-                <select id="startTimeHour">{this.hourOptions()}</select>
-                <select id="startTimeMinutes">{this.minuteOptions()}</select>
-                <select id="startTimeamPm">
-                  <option value="am">AM</option>
-                  <option value="pm">PM</option>
-                </select>
-                <br />
-                <label name="endTime">End Time: </label>
-                <br />
-                <select id="endTimeHour">{this.hourOptions()}</select>
-                <select id="endTimeMinutes">{this.minuteOptions()}</select>
-                <select id="endTimeamPm">
-                  <option value="am">AM</option>
-                  <option value="pm">PM</option>
-                </select>
+                <Row>
+                  <Col md={{ span: 6 }}>
+                    <label name="startTime">Start Time: </label>
+                  </Col>
+
+                  <Col md={{ span: 6 }}>
+                    <label name="endTime">End Time: </label>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={{ span: 6 }}>
+                    <select id="startTimeHour">{this.hourOptions()}</select>
+                    <select id="startTimeMinutes">
+                      {this.minuteOptions()}
+                    </select>
+                    <select id="startTimeamPm">
+                      <option value="am">AM</option>
+                      <option value="pm">PM</option>
+                    </select>
+                  </Col>
+                  <Col md={{ span: 6 }}>
+                    <select id="endTimeHour">{this.hourOptions()}</select>
+                    <select id="endTimeMinutes">{this.minuteOptions()}</select>
+                    <select id="endTimeamPm">
+                      <option value="am">AM</option>
+                      <option value="pm">PM</option>
+                    </select>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={{ span: 6 }}>
+                    <label name="services">Choose Service to offer: </label>
+
+                    <select id="serviceTypes">
+                      {this.serviceOptions(services)}
+                    </select>
+                  </Col>
+                </Row>
               </Form>
             )}
           </Formik>
