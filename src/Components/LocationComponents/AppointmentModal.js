@@ -1,5 +1,6 @@
 import React from "react";
 import Calendar from "react-calendar";
+import { connect } from "react-redux";
 import { Col, Row, Modal, Button } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 
@@ -139,4 +140,10 @@ class AppointmentModal extends React.Component {
   }
 }
 
-export default AppointmentModal;
+function mapStateToProps(state) {
+  const { isFetching, responseStatus, error } = state.locations;
+
+  return { isFetching, responseStatus, error };
+}
+
+export default connect(mapStateToProps)(AppointmentModal);
