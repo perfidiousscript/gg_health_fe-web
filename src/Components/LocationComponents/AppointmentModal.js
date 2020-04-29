@@ -19,7 +19,9 @@ class AppointmentModal extends React.Component {
       endTimeAmPm: "AM",
       service: "",
       isValid: false,
-      error: { type: "", message: "" }
+      error: { type: "", message: "" },
+      shouldValidate: false,
+      blanketValidate: false
     };
   }
 
@@ -94,7 +96,10 @@ class AppointmentModal extends React.Component {
 
     this.setState({ dates: newDateObject });
     if (error.type === "date") {
-      this.setState({ error: { type: "", message: "" } });
+      this.setState({
+        error: { type: "", message: "" },
+        shouldValidate: false
+      });
     }
   };
 
@@ -132,6 +137,7 @@ class AppointmentModal extends React.Component {
     if (Object.keys(dates).length === 0) {
       this.setState({
         isValid: false,
+        shouldValidate: false,
         error: { type: "date", message: "Please select at least one date!" }
       });
     } else if (dates.date) {
@@ -161,6 +167,7 @@ class AppointmentModal extends React.Component {
       if (startTime < endTime) {
         this.setState({
           isValid: true,
+          shouldValidate: false,
           error: {
             type: "",
             message: ""
@@ -169,6 +176,7 @@ class AppointmentModal extends React.Component {
       } else {
         this.setState({
           isValid: false,
+          shouldValidate: false,
           error: {
             type: "endTime",
             message: "Appointment Start Time must come before End Time!"
@@ -176,12 +184,24 @@ class AppointmentModal extends React.Component {
         });
       }
     } else if (dates.start) {
+      //Handle date range here.
+      this.setState({
+        isValid: false,
+        shouldValidate: false,
+        error: {
+          type: "endTime",
+          message: "Appointment Start Time must come before End Time!"
+        }
+      });
     }
   };
 
   changeAndValidate = e => {
     this.onChange(e);
-    this.validate();
+    this.setState({
+      shouldValidate: true,
+      blanketValidate: true
+    });
   };
 
   onChange = e => {
@@ -195,9 +215,35 @@ class AppointmentModal extends React.Component {
     });
   };
 
+  compileDates = () => {};
+
   onSubmit = () => {
-    console.log("state: ", this.state);
+    const {
+      dates,
+      startTimeHour,
+      startTimeMinute,
+      startTimeAmPm,
+      endTimeHour,
+      endTimeMinute,
+      endTimeAmPm,
+      service,
+      isValid,
+      error,
+      blanketValidate
+    } = this.state;
+
+    let dateHash = this.compileDate();
   };
+
+  componentDidUpdate() {
+    const { shouldValidate } = this.state;
+    if (shouldValidate) {
+      this.validate();
+      this.setState({
+        shouldValidate: false
+      });
+    }
+  }
 
   render() {
     const { handleClose, services, isFetching } = this.props;
@@ -211,7 +257,8 @@ class AppointmentModal extends React.Component {
       endTimeAmPm,
       service,
       isValid,
-      error
+      error,
+      blanketValidate
     } = this.state;
 
     return (
@@ -240,21 +287,27 @@ class AppointmentModal extends React.Component {
               <select
                 id="startTimeHour"
                 value={startTimeHour}
-                onChange={this.onChange}
+                onChange={
+                  blanketValidate ? this.changeAndValidate : this.onChange
+                }
               >
                 {this.hourOptions()}
               </select>
               <select
                 id="startTimeMinute"
                 value={startTimeMinute}
-                onChange={this.onChange}
+                onChange={
+                  blanketValidate ? this.changeAndValidate : this.onChange
+                }
               >
                 {this.minuteOptions()}
               </select>
               <select
                 id="startTimeAmPm"
                 value={startTimeAmPm}
-                onChange={this.onChange}
+                onChange={
+                  blanketValidate ? this.changeAndValidate : this.onChange
+                }
               >
                 <option value="am">AM</option>
                 <option value="pm">PM</option>
@@ -288,7 +341,11 @@ class AppointmentModal extends React.Component {
           <Row>
             <Col md={{ span: 6 }}>
               <label name="service">Choose Service to offer: </label>
-              <select id="service" value={service} onChange={this.onChange}>
+              <select
+                id="service"
+                value={service}
+                onChange={this.changeAndValidate}
+              >
                 {this.serviceOptions(services)}
               </select>
             </Col>
