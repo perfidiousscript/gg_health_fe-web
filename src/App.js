@@ -12,7 +12,7 @@ import EditLocation from "./Components/LocationComponents/EditLocation.js";
 import Constellation from "./Components/LocationComponents/Constellation.js";
 import Practices from "./Components/PracticesComponents/Practices.js";
 import EditPractice from "./Components/PracticesComponents/EditPractice.js";
-import AddPractice from "./Components/PracticesComponents/AddPractice.js";
+import AddPractice from "./Components/PracticesComponents/AddPractice.tsx";
 import SignIn from "./SignIn.js";
 import AuthLink from "./AuthLink.js";
 import ManagerDash from "./ManagerDash.js";

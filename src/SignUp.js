@@ -6,7 +6,7 @@ import StepTwo from "./Components/SignUpComponents/StepTwo.js";
 import StepThree from "./Components/SignUpComponents/StepThree.js";
 import StepFour from "./Components/SignUpComponents/StepFour.js";
 import StepFinal from "./Components/SignUpComponents/StepFinal.js";
-import AddPractice from "./Components/PracticesComponents/AddPractice.js";
+import AddPractice from "./Components/PracticesComponents/AddPractice.tsx";
 
 class SignUp extends React.Component {
   constructor(props) {
