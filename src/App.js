@@ -11,7 +11,7 @@ import Location from "./Components/LocationComponents/Location.js";
 import EditLocation from "./Components/LocationComponents/EditLocation.js";
 import Constellation from "./Components/LocationComponents/Constellation.js";
 import Practices from "./Components/PracticesComponents/Practices.tsx";
-import EditPractice from "./Components/PracticesComponents/EditPractice.js";
+import EditPractice from "./Components/PracticesComponents/EditPractice.tsx";
 import AddPractice from "./Components/PracticesComponents/AddPractice.tsx";
 import SignIn from "./SignIn.js";
 import AuthLink from "./AuthLink.js";

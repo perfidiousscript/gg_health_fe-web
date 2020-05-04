@@ -1,17 +1,45 @@
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import { Link } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
+import { Practice, Contact, User } from "../../js/interfaces/index";
 
 import { editPractice } from "../../js/actions/practice_actions.js";
 
-class EditPractice extends React.Component {
-  constructor(props) {
+interface Location {
+  state: EditPracticeState;
+}
+
+interface EditPracticeProps {
+  user: User;
+  isFetching: boolean;
+  responseStatus: number;
+  location: Location;
+}
+
+interface EditPracticeState {
+  practice: Practice;
+  contactRowValues: Contact[];
+}
+
+interface SubmittedValues {
+  id: number;
+  contact: Contact[];
+  name: string;
+  staff: number[];
+}
+
+class EditPractice extends Component<EditPracticeProps, EditPracticeState> {
+  constructor(props: EditPracticeProps) {
     super(props);
 
-    this.state = { practice: this.props.location.state.practice };
-    this.state.contactRowValues = this.props.location.state.practice.contact;
+    const { practice } = this.props.location.state;
+
+    this.state = {
+      practice: practice,
+      contactRowValues: practice.contact
+    };
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -21,36 +49,37 @@ class EditPractice extends React.Component {
 
     return (
       <div>
-        {contactRowValues.map((rowArray, index) => {
+        {contactRowValues.map((rowArray: RowArray, index: number) => {
+          let indexString = index.toString();
           return (
             <div key={index}>
               <Row>
                 <Col md={{ span: 2, offset: 4 }}>
-                  <label for="contactType">Contact Type</label>
+                  <label htmlFor="contactType">Contact Type</label>
                 </Col>
                 <Col md={{ span: 2 }}>
-                  <label for="contactInfo">Contact Info</label>
+                  <label htmlFor="contactInfo">Contact Info</label>
                 </Col>
               </Row>
               <Row>
                 <Col md={{ span: 2, offset: 4 }}>
                   <input
                     type="text"
-                    id={index}
+                    id={indexString}
                     data-kind="type"
                     value={rowArray.type}
                     onChange={this.handleChange}
-                    name={`contactType${index}`}
+                    name={`contactType${indexString}`}
                   />
                 </Col>
                 <Col md={{ span: 2 }}>
                   <input
                     type="text"
-                    id={index}
+                    id={indexString}
                     data-kind="value"
                     value={rowArray.value}
                     onChange={this.handleChange}
-                    name={`contactInfo${index}`}
+                    name={`contactInfo${indexString}`}
                   />
                 </Col>
               </Row>
@@ -89,7 +118,7 @@ class EditPractice extends React.Component {
   };
 
   render() {
-    const { user, dispatch, isFetching } = this.props;
+    const { user, isFetching } = this.props;
     const { practice } = this.state;
     return (
       <div>
@@ -101,18 +130,20 @@ class EditPractice extends React.Component {
           }}
           onSubmit={values => {
             const { contactRowValues } = this.state;
+            let submittedValues: SubmittedValues = {
+              ...values,
+              contact: contactRowValues,
+              id: this.state.practice.id
+            };
 
-            values.contact = contactRowValues;
-            values.id = this.state.practice.id;
-
-            dispatch(editPractice(values));
+            editPractice(values);
           }}
         >
-          {({ isFetching, responseStatus }) => (
+          {() => (
             <Form>
               <Row>
                 <Col md={{ span: 2, offset: 4 }}>
-                  <label for="name">Practice Name</label>
+                  <label htmlFor="name">Practice Name</label>
                 </Col>
               </Row>
               <Row>
@@ -122,13 +153,13 @@ class EditPractice extends React.Component {
               </Row>
               {this.contactRows()}
               <Col md={{ span: 2, offset: 4 }}>
-                <button type="addContact" onClick={this.addContactField}>
+                <button type="button" onClick={this.addContactField}>
                   Add Contact Type
                 </button>
               </Col>
               <Row>
                 <Col md={{ span: 2, offset: 4 }}>
-                  <label for="staff">Staff</label>
+                  <label htmlFor="staff">Staff</label>
                 </Col>
               </Row>
               <Row>
@@ -155,7 +186,7 @@ class EditPractice extends React.Component {
     );
   }
 }
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
   const { isFetching, responseStatus } = state.practices;
   const { user } = state.user;
 

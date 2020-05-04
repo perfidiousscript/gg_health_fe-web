@@ -1,18 +1,27 @@
-import React, { FormEvent } from "react";
+import React, { Component, FormEvent } from "react";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import { Link } from "react-router-dom";
 import { Container, Col, Row, Button } from "react-bootstrap";
+import {
+  RowArray,
+  BasePropsInterface,
+  User,
+  Contact
+} from "../../js/interfaces/index";
 
 import { createPractice } from "../../js/actions/practice_actions.js";
 
-interface RowArray {
-  type: string;
-  value: string;
+interface AddPracticeProps extends BasePropsInterface {
+  user: User;
 }
 
-class AddPractice extends React.Component<any, any> {
-  constructor(props: any) {
+interface AddPracticeState {
+  contactRowValues: Contact[];
+}
+
+class AddPractice extends Component<AddPracticeProps, AddPracticeState> {
+  constructor(props: AddPracticeProps) {
     super(props);
     this.state = { contactRowValues: [{ type: "", value: "" }] };
     this.handleChange = this.handleChange.bind(this);
@@ -22,8 +31,9 @@ class AddPractice extends React.Component<any, any> {
     return (
       <div>
         {contactRowValues.map((rowArray: RowArray, index: number) => {
+          let indexString: string = index.toString();
           return (
-            <div key={index}>
+            <div key={indexString}>
               <Row>
                 <Col md={{ span: 2, offset: 4 }}>
                   <label htmlFor="contactType">Contact Type</label>
@@ -36,23 +46,27 @@ class AddPractice extends React.Component<any, any> {
                 <Col md={{ span: 2, offset: 4 }}>
                   <input
                     type="text"
-                    id={index.toString()}
+                    id={indexString}
                     data-kind="type"
+                    data-number={index}
                     value={rowArray.type}
                     onChange={(ev: FormEvent<HTMLInputElement>): void =>
                       this.handleChange(ev)
                     }
-                    name={`contactType${index}`}
+                    name={`contactType${indexString}`}
                   />
                 </Col>
                 <Col md={{ span: 2 }}>
                   <input
                     type="text"
-                    id={index.toString()}
+                    id={indexString}
                     data-kind="value"
+                    data-number={index}
                     value={rowArray.value}
-                    onChange={this.handleChange}
-                    name={`contactInfo${index}`}
+                    onChange={(ev: FormEvent<HTMLInputElement>): void =>
+                      this.handleChange(ev)
+                    }
+                    name={`contactInfo${indexString}`}
                   />
                 </Col>
               </Row>
@@ -79,8 +93,8 @@ class AddPractice extends React.Component<any, any> {
   handleChange = (event: FormEvent<HTMLInputElement>) => {
     event.preventDefault();
     const { contactRowValues } = this.state;
-    let id: string = event.currentTarget.id;
-    let kind: string = event.currentTarget.getAttribute("data-kind") || "text";
+    let id: string = event.currentTarget.getAttribute("data-number");
+    let kind: string = event.currentTarget.getAttribute("data-kind");
     let updatedContactRowValues = contactRowValues;
 
     updatedContactRowValues[id][kind] = event.currentTarget.value;
@@ -91,7 +105,7 @@ class AddPractice extends React.Component<any, any> {
   };
 
   render() {
-    const { user, dispatch, isFetching, responseStatus, error } = this.props;
+    const { user, isFetching, responseStatus, error } = this.props;
     const { contactRowValues } = this.state;
 
     if (!isFetching) {
@@ -121,7 +135,7 @@ class AddPractice extends React.Component<any, any> {
           }}
           onSubmit={values => {
             values.contact = contactRowValues;
-            dispatch(createPractice(values));
+            createPractice(values);
           }}
         >
           {() => (
